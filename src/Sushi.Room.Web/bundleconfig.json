@@ -1,0 +1,61 @@
+[
+  {
+    "outputFileName": "wwwroot/admin/css/site.min.css",
+    "inputFiles": [
+      "wwwroot/fonts/google-fonts.css",
+      "wwwroot/plugins/font-awesome/css/font-awesome.min.css",
+      "wwwroot/plugins/simple-line-icons/simple-line-icons.min.css",
+      "wwwroot/plugins/bootstrap/css/bootstrap.min.css",
+      "wwwroot/plugins/bootstrap-switch/css/bootstrap-switch.min.css",
+      "wwwroot/plugins/bootstrap-fileinput/bootstrap-fileinput.css",
+      "wwwroot/plugins/metronic/css/components-md.min.css",
+      "wwwroot/plugins/metronic/css/plugins-md.min.css",
+      "wwwroot/plugins/metronic/css/layout.min.css",
+      "wwwroot/plugins/metronic/css/darkblue.min.css",
+      "wwwroot/plugins/metronic/css/custom.min.css",
+      "wwwroot/plugins/metronic/css/error.min.css",
+      "wwwroot/plugins/toastr/toastr.min.css",
+      "wwwroot/admin/css/style.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/admin/scripts/plugins.min.js",
+    "inputFiles": [
+      "wwwroot/plugins/jquery/jquery.min.js",
+
+      "wwwroot/plugins/jquery/jquery.unobtrusive-ajax.min.js",
+      "wwwroot/plugins/jquery/jquery.validate.min.js",
+      "wwwroot/plugins/jquery/jquery.validate.unobtrusive.min.js",
+      "wwwroot/plugins/jquery/jquery.numeric-input.js",
+      "wwwroot/plugins/bootstrap/js/bootstrap.min.js",
+      "wwwroot/plugins/bootstrap/js/bootbox.min.js",
+      "wwwroot/plugins/cookie/js.cookie.min.js",
+      "wwwroot/plugins/jquery-slimscroll/jquery.slimscroll.min.js",
+      "wwwroot/plugins/jquery/jquery.blockui.min.js",
+      "wwwroot/plugins/bootstrap-switch/js/bootstrap-switch.min.js",
+      "wwwroot/plugins/bootstrap/js/jquery.bootstrap.wizard.min.js",
+      "wwwroot/plugins/bootstrap-fileinput/bootstrap-fileinput.js",
+      "wwwroot/plugins/metronic/scripts/app.min.js",
+      "wwwroot/plugins/metronic/scripts/layout.min.js",
+      "wwwroot/plugins/metronic/scripts/quick-sidebar.min.js",
+      "wwwroot/plugins/toastr/toastr.min.js",
+      "wwwroot/plugins/toastr/toastrNotification.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/admin/scripts/custom.min.js",
+    "inputFiles": [
+      "wwwroot/admin/scripts/globals.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  }
+]

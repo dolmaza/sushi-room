@@ -1,0 +1,57 @@
+﻿@model List<SidebarMenuModel>
+<div class="page-sidebar-wrapper">
+    <div class="page-sidebar navbar-collapse collapse">
+        <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+            <li class="sidebar-toggler-wrapper hide">
+                <div class="sidebar-toggler">
+                    <span></span>
+                </div>
+            </li>
+            @foreach (var item in Model)
+            {
+                if (item.HasSecondLevelMenuItems)
+                {
+                    <li class="nav-item start @(item.IsMenuItemExpanded ? Html.Raw("active open") : null)">
+                        <a href="javascript:;" class="nav-link nav-toggle">
+                            <i class="@item.IconName"></i>
+                            <span class="title">@item.Caption</span>
+                            @if (item.IsMenuItemExpanded)
+                            {
+                                <span class="selected"></span>
+                                <span class="arrow open"></span>
+                            }
+                            else
+                            {
+                                <span class="arrow"></span>
+                            }
+                        </a>
+                        <ul class="sub-menu">
+                            @foreach (var subItem in item.SecondLevelMenuItems)
+                            {
+                                <li class="nav-item start @(subItem.IsActive ? Html.Raw("active open") : null)">
+                                    <a href="@subItem.Url" class="nav-link ">
+                                        <i class="fa fa-circle-o"></i>
+                                        <span class="title">@subItem.Caption</span>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item start @(item.IsActive ? Html.Raw("active open") : null)">
+                        <a href="@item.Url" class="nav-link nav-toggle">
+                            <i class="@item.IconName"></i>
+                            <span class="title">@item.Caption</span>
+                            @if (item.IsActive)
+                            {
+                                <span class="selected"></span>
+                            }
+                        </a>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</div>

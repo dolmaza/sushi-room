@@ -1,0 +1,21 @@
+.dx-treelist .dx-icon-trash,
+.dx-datagrid .dx-icon-trash {
+    color: crimson;
+}
+
+.page-header.navbar.navbar-fixed-top, .page-header.navbar.navbar-static-top {
+    z-index: 999;
+}
+
+.page-footer {
+    z-index: 0;
+}
+
+
+.page-header
+.page-header-inner
+.page-logo
+.logo-default {
+    margin-top: 20px;
+    margin-left: 20px;
+}

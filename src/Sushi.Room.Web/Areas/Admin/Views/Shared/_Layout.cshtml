@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>
+        @ViewData["Title"]
+    </title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="Preview page of Metronic Admin Theme #1 for blank page layout" name="description" />
+    <meta content="" name="author" />
+    <link rel="stylesheet" href="~/admin/css/site.min.css" asp-append-version="true">
+    @RenderSection("Styles", false)
+
+    <link rel="shortcut icon" href="admin/images/favicon.ico" />
+</head>
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white page-md">
+    <div id="popupContainer" style="z-index:9999999;"></div>
+    <div class="page-wrapper">
+        @await Component.InvokeAsync("Header")
+        <div class="clearfix"> </div>
+        <div class="page-container">
+            @await Component.InvokeAsync("SideBar")
+            <div class="page-content-wrapper">
+                <div class="page-content">
+                    @RenderSection("Breadcrumbs", false)
+                    <h1 class="page-title">
+                        @ViewData["Title"]
+                    </h1>
+                    <div id="main-content">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-footer">
+            <div class="page-footer-inner">
+                @DateTime.Now.Year &copy; Sushi Room
+            </div>
+            <div class="scroll-to-top">
+                <i class="icon-arrow-up"></i>
+            </div>
+        </div>
+    </div>
+    <script src="~/admin/scripts/plugins.min.js" asp-append-version="true"></script>
+    <script src="~/admin/scripts/custom.min.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", false)
+
+    <script>
+        $(function () {
+            var successMessage = '@Html.Raw(TempData["Temp_Success_Message"]?.ToString())';
+            var errorMessage = '@Html.Raw(TempData["Temp_Error_Message"]?.ToString())';
+
+            if (successMessage) {
+                toastrNotification.init(successMessage).showMessage();
+            }
+
+            if (errorMessage) {
+                toastrNotification.init(errorMessage, { notificationType: toastrNotification.types.error }).showMessage();
+            }
+        });
+    </script>
+</body>
+</html>
