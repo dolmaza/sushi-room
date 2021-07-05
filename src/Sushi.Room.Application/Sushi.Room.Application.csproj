@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sushi.Room.Domain\Sushi.Room.Domain.csproj" />
+    <ProjectReference Include="..\Sushi.Room.Infrastructure\Sushi.Room.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
