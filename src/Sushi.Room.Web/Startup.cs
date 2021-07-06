@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Sushi.Room.Application.Services;
 using Sushi.Room.Domain.AggregatesModel.UserAggregate;
 using Sushi.Room.Domain.SeedWork;
 using Sushi.Room.Infrastructure;
@@ -30,6 +31,7 @@ namespace Sushi.Room.Web
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
 
 
             services.AddDbContext<SushiRoomDbContext>(options =>
@@ -41,9 +43,9 @@ namespace Sushi.Room.Web
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
-                    options.LoginPath = "admin/login";
-                    options.LogoutPath = "admin/logout";
-                    options.AccessDeniedPath = "admin/login";
+                    options.LoginPath = "/admin/login";
+                    options.LogoutPath = "/admin/logout";
+                    options.AccessDeniedPath = "/admin/login";
                 });
         }
 
@@ -62,6 +64,8 @@ namespace Sushi.Room.Web
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
