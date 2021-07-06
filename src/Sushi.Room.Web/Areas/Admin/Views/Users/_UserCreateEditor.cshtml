@@ -1,0 +1,56 @@
+﻿@model UserDto
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="actions">
+            <button class="btn btn-primary" type="submit"><i class="fa fa-floppy-o"></i> შენახვა</button>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="card-body">
+            <input type="hidden" asp-for="Id" value="@Model.Id" />
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="UserName"></label>
+                        <input type="text" class="form-control" asp-for="UserName" value="@Model.UserName">
+                        <span class="text-danger" asp-validation-for="UserName"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Password"></label>
+                        <input type="password" class="form-control" asp-for="Password">
+                        <span class="text-danger" asp-validation-for="Password"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="FirstName"></label>
+                        <input type="text" class="form-control" asp-for="FirstName" value="@Model.FirstName">
+                        <span class="text-danger" asp-validation-for="FirstName"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="LastName"></label>
+                        <input type="text" class="form-control" asp-for="LastName" value="@Model.LastName">
+                        <span class="text-danger" asp-validation-for="LastName"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="IsActive"></label>
+                        <div>
+                            <input class="checkbox-bootstrap-switch" asp-for="IsActive" type="checkbox" value="true" data-on-text="კი" data-off-text="არა">
+                            <span class="text-danger" asp-validation-for="IsActive"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

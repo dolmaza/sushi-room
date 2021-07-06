@@ -1,12 +1,10 @@
-﻿using Sushi.Room.Domain.AggregatesModel.UserAggregate;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Sushi.Room.Application.Services.DataModels
 {
     public class UserDto
     {
         public int? Id { get; set; }
-        public UserRole Role { get; set; }
 
         [Display(Name = "User Name")]
         public string UserName { get; set; }

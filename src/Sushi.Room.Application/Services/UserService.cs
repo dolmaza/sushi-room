@@ -36,7 +36,7 @@ namespace Sushi.Room.Application.Services
 
         public async Task<int> AddNewUserAsync(UserDto userDto)
         {
-            var user = User.CreateNew(userDto.Role, userDto.UserName, userDto.Password.ToSha256(), userDto.FirstName, userDto.LastName, userDto.IsActive);
+            var user = User.CreateNew(userDto.UserName, userDto.Password.ToSha256(), userDto.FirstName, userDto.LastName, userDto.IsActive);
 
             await _repository.AddAsync(user);
             await _repository.SaveChangesAsync();
@@ -53,7 +53,7 @@ namespace Sushi.Room.Application.Services
                 throw new SushiRoomDomainException("მომხმარებელი ვერ მოიძებნა");
             }
 
-            user.UpdateMetaData(userDto.Role, userDto.UserName, userDto.Password.ToSha256(), userDto.FirstName, userDto.LastName);
+            user.UpdateMetaData(userDto.UserName, userDto.Password.ToSha256(), userDto.FirstName, userDto.LastName);
 
             if (userDto.IsActive)
             {
@@ -109,7 +109,6 @@ namespace Sushi.Room.Application.Services
                 Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Role = user.Role,
                 IsActive = user.IsActive,
                 UserName = user.UserName
             };

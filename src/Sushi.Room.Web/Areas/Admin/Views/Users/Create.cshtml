@@ -1,0 +1,32 @@
+﻿@model UserEditorModel
+@{
+    ViewData["Title"] = "მომხმარებლის დამატება";
+}
+
+@section Breadcrumbs
+{
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <a href="@Url.RouteUrl(RouteNames.Admin.User.Users)">მომხმარებლები</a>
+                <i class="fa fa-circle"></i>
+            </li>
+            <li>
+                <span>@ViewData["Title"]</span>
+            </li>
+        </ul>
+    </div>
+}
+
+<form asp-controller="Users" asp-action="Create" method="post">
+    <partial name="_UserCreateEditor.cshtml" model="Model.User" />
+</form>
+
+@section Scripts {
+    <script src="~/admin/scripts/Users/UserEditorModel.js"></script>
+    <script>
+        $(function () {
+            UserEditorModel.init();
+        });
+    </script>
+}

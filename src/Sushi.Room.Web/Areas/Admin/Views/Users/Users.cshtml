@@ -1,0 +1,74 @@
+﻿@model UserViewModel
+@{
+    ViewData["Title"] = "მომხმარებლები";
+}
+
+@section Breadcrumbs
+{
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <span>@ViewData["Title"]</span>
+            </li>
+        </ul>
+    </div>
+}
+
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="actions">
+            <a class="btn btn-primary" asp-controller="Users" asp-action="Create"><i class="fa fa-plus"></i> დამატება</a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="card-body">
+            <table id="users-table" class="table table-bordered table-responsive table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>User Name</th>
+                        <th>სახელი</th>
+                        <th>გვარი</th>
+                        <th>აქტიურია?</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="students-table-body">
+                    @foreach (var item in Model.Users)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.UserName</td>
+                            <td>@item.FirstName</td>
+                            <td>@item.LastName</td>
+                            <td class="text-center">
+                                <label class="mt-checkbox mt-checkbox-outline">
+                                    <input type="checkbox" @(item.IsActive ? Html.Raw("checked") : null)>
+                                    <span></span>
+                                </label>
+                            </td>
+                            <td>
+                                <a href="@Url.RouteUrl(RouteNames.Admin.User.Update, new {id = item.Id})" class="btn btn-xs btn-primary"> <i class="fa fa-pencil"></i></a>
+                                <button class="btn btn-xs btn-danger delete-btn" data-url="@Url.RouteUrl(RouteNames.Admin.User.Delete, new {id = item.Id})">
+                                    <i class="fa fa-trash-o"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/admin/scripts/Users/UserViewModel.js"></script>
+    <script>
+        $(function () {
+            UserViewModel.init();
+        });
+    </script>
+}

@@ -17,8 +17,6 @@ namespace Sushi.Room.Web.Infrastructure.Identity
             };
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-            identity.AddClaim(new Claim(ClaimTypes.Role, user.Role.ToString()));
-
             return identity;
         }
     }

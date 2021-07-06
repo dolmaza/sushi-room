@@ -26,10 +26,10 @@ namespace Sushi.Room.Infrastructure
         {
             if (!await context.Set<User>().AnyAsync())
             {
-                var adminUser = User.CreateNew(UserRole.Admin, "admin", "1qaz!QAZ".ToSha256(), "admin", "admin", true);
-                adminUser.DateOfCreate = DateTimeOffset.UtcNow;
+                var user = User.CreateNew("admin", "1qaz!QAZ".ToSha256(), "admin", "admin", true);
+                user.DateOfCreate = DateTimeOffset.UtcNow;
 
-                await context.AddAsync(adminUser);
+                await context.AddAsync(user);
 
                 await context.SaveChangesAsync();
             }
