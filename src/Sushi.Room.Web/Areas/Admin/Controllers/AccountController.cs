@@ -24,6 +24,7 @@ namespace Sushi.Room.Web.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("login", Name = RouteNames.Admin.Account.Login)]
+        [Route("")]
         public IActionResult Login(string returnUrl)
         {
             return View(new LoginEditorModel { ReturnUrl = returnUrl });

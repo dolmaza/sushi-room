@@ -1,0 +1,41 @@
+﻿@model CategoryDto
+
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="actions">
+            <button class="btn btn-primary" type="submit"><i class="fa fa-floppy-o"></i> შენახვა</button>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="card-body">
+            <input type="hidden" asp-for="Id" value="@Model.Id" />
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Caption"></label>
+                        <input type="text" class="form-control" asp-for="Caption" value="@Model.Caption">
+                        <span class="text-danger" asp-validation-for="Caption"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="CaptionEng"></label>
+                        <input type="text" class="form-control" asp-for="CaptionEng">
+                        <span class="text-danger" asp-validation-for="CaptionEng"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="IsPublished"></label>
+                        <div>
+                            <input class="checkbox-bootstrap-switch" asp-for="IsPublished" type="checkbox" value="true" data-on-text="კი" data-off-text="არა">
+                            <span class="text-danger" asp-validation-for="IsPublished"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -29,6 +29,7 @@
                 public const string Update = "CategoriesUpdate";
                 public const string Create = "CategoriesCreate";
                 public const string Delete = "CategoriesDelete";
+                public const string SyncSortIndexes = "CategoriesSyncSortIndexes";
             }
 
             public struct Product

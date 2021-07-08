@@ -1,0 +1,72 @@
+﻿@model CategoryViewModel
+@{
+    ViewData["Title"] = "კატეგორიები";
+}
+
+@section Breadcrumbs
+{
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <span>@ViewData["Title"]</span>
+            </li>
+        </ul>
+    </div>
+}
+
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="actions">
+            <a class="btn btn-primary" asp-controller="Categories" asp-action="Create"><i class="fa fa-plus"></i> დამატება</a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="card-body">
+            <table id="categories-table" class="table table-bordered table-responsive table-hover" data-sync-sort-indexes-url="@Url.RouteUrl(RouteNames.Admin.Category.SyncSortIndexes)">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>დასახელება</th>
+                        <th>დასახელება ინგ.</th>
+                        <th>გამოქვეყნებულია?</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="categories-table-body">
+                    @foreach (var item in Model.Categories)
+                    {
+                        <tr data-id="@item.Id">
+                            <td>@item.Id</td>
+                            <td>@item.Caption</td>
+                            <td>@item.CaptionEng</td>
+                            <td class="text-center">
+                                <label class="mt-checkbox mt-checkbox-outline">
+                                    <input type="checkbox" @(item.IsPublished ? Html.Raw("checked") : null)>
+                                    <span></span>
+                                </label>
+                            </td>
+                            <td>
+                                <a href="@Url.RouteUrl(RouteNames.Admin.Category.Update, new {id = item.Id})" class="btn btn-xs btn-primary"> <i class="fa fa-pencil"></i></a>
+                                <button class="btn btn-xs btn-danger delete-btn" data-url="@Url.RouteUrl(RouteNames.Admin.Category.Delete, new {id = item.Id})">
+                                    <i class="fa fa-trash-o"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/admin/scripts/Categories/CategoryViewModel.js"></script>
+    <script>
+        $(function () {
+            CategoryViewModel.init();
+        });
+    </script>
+}

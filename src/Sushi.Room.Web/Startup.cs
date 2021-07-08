@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sushi.Room.Application.Services;
+using Sushi.Room.Domain.AggregatesModel.CategoryAggregate;
 using Sushi.Room.Domain.AggregatesModel.UserAggregate;
 using Sushi.Room.Domain.SeedWork;
 using Sushi.Room.Infrastructure;
@@ -32,6 +33,8 @@ namespace Sushi.Room.Web
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ICategoryService, CategoryService>();
 
 
             services.AddDbContext<SushiRoomDbContext>(options =>

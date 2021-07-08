@@ -1,0 +1,33 @@
+﻿@model CategoryEditorModel
+@{
+    ViewData["Title"] = $"კატეგორიის რედაქტირება - '{Model.Category.Caption}'";
+}
+@section Breadcrumbs
+{
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <a href="@Url.RouteUrl(RouteNames.Admin.Category.Categories)">კატეგორიები</a>
+                <i class="fa fa-circle"></i>
+            </li>
+            <li>
+                <span>@ViewData["Title"]</span>
+            </li>
+        </ul>
+    </div>
+}
+
+<form asp-controller="Categories" asp-action="Update" method="post">
+    <partial name="_CategoryEditorModel.cshtml" model="Model.Category" />
+</form>
+
+
+@section Scripts
+{
+    <script src="~/admin/scripts/Categories/CategoryEditorModel.js"></script>
+    <script>
+        $(function () {
+            CategoryEditorModel.init();
+        });
+    </script>
+}

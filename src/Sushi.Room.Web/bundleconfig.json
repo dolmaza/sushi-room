@@ -22,6 +22,7 @@
     "outputFileName": "wwwroot/admin/scripts/plugins.min.js",
     "inputFiles": [
       "wwwroot/plugins/jquery/jquery.min.js",
+      "wwwroot/plugins/jquery-ui/jquery-ui.min.js",
 
       "wwwroot/plugins/jquery/jquery.unobtrusive-ajax.min.js",
       "wwwroot/plugins/jquery/jquery.validate.min.js",
