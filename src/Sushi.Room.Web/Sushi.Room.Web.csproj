@@ -18,4 +18,8 @@
     <ProjectReference Include="..\Sushi.Room.Application\Sushi.Room.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\upload\" />
+  </ItemGroup>
+
 </Project>

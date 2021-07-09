@@ -1,4 +1,6 @@
-﻿using Sushi.Room.Application.Services.DataModels;
+﻿using Microsoft.Extensions.Options;
+using Sushi.Room.Application.Options;
+using Sushi.Room.Application.Services.DataModels;
 using Sushi.Room.Domain.AggregatesModel.CategoryAggregate;
 using Sushi.Room.Domain.Exceptions;
 using System.Collections.Generic;
@@ -10,10 +12,11 @@ namespace Sushi.Room.Application.Services
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _repository;
-
-        public CategoryService(ICategoryRepository repository)
+        private readonly AppSettings _appSettings;
+        public CategoryService(ICategoryRepository repository, IOptions<AppSettings> appSettings)
         {
             _repository = repository;
+            _appSettings = appSettings.Value;
         }
 
         public async Task<List<CategoryDto>> GetCategoriesAsync()
@@ -119,6 +122,11 @@ namespace Sushi.Room.Application.Services
                 IsPublished = category.IsPublished,
                 SortIndex = category.SortIndex
             };
+        }
+
+        private async Task SaveCategoryImageAsync(string imageBase64, string oldImageFileName = default)
+        {
+
         }
     }
 }

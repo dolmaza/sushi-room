@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Sushi.Room.Application.Options;
 using Sushi.Room.Application.Services;
 using Sushi.Room.Domain.AggregatesModel.CategoryAggregate;
 using Sushi.Room.Domain.AggregatesModel.UserAggregate;
@@ -27,6 +28,8 @@ namespace Sushi.Room.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
+
             services.AddControllersWithViews()
                 .AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining(typeof(Startup)).ConfigureClientsideValidation(enabled: false));
 
