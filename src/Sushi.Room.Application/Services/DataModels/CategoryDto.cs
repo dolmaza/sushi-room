@@ -12,7 +12,11 @@ namespace Sushi.Room.Application.Services.DataModels
         [Display(Name = "დასახელება ინგ.")]
         public string CaptionEng { get; set; }
 
+        [Display(Name = "სურათი")]
         public string ImageName { get; set; }
+
+        public string ImageUrl { get; set; }
+        public string ImageBase64 { get; set; }
 
         [Display(Name = "გამოქვეყნებულია?")]
         public bool IsPublished { get; set; }

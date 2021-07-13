@@ -28,12 +28,25 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
+                        <label asp-for="ImageName"></label>
+                        <input type="file" class="form-control" id="category-image">
+                        <input type="hidden" asp-for="ImageName" >
+                        <input type="hidden" asp-for="ImageBase64" >
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
                         <label asp-for="IsPublished"></label>
                         <div>
                             <input class="checkbox-bootstrap-switch" asp-for="IsPublished" type="checkbox" value="true" data-on-text="კი" data-off-text="არა">
                             <span class="text-danger" asp-validation-for="IsPublished"></span>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 text-center">
+                    <img src="@(string.IsNullOrEmpty(Model.ImageUrl) ? Html.Raw("#") : Html.Raw(Model.ImageUrl))" alt="Image" class="img-thumbnail @(string.IsNullOrEmpty(Model.ImageUrl) ? Html.Raw("hidden") : null)" id="category-image-preview" height="40%" width="40%">
                 </div>
             </div>
         </div>
