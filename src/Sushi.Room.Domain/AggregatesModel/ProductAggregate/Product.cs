@@ -11,7 +11,7 @@ namespace Sushi.Room.Domain.AggregatesModel.ProductAggregate
         {
 
         }
-        private Product(int categoryId, int userId, string title, string titleEng, string description, string descriptionEng, decimal price)
+        private Product(int categoryId, int userId, string title, string titleEng, string description, string descriptionEng, string imageName, decimal price)
         {
             CategoryId = categoryId;
             UserId = userId;
@@ -19,6 +19,7 @@ namespace Sushi.Room.Domain.AggregatesModel.ProductAggregate
             TitleEng = titleEng;
             Description = description;
             DescriptionEng = descriptionEng;
+            ImageName = imageName;
             Price = price;
         }
 
@@ -28,6 +29,7 @@ namespace Sushi.Room.Domain.AggregatesModel.ProductAggregate
         public string TitleEng { get; private set; }
         public string Description { get; private set; }
         public string DescriptionEng { get; private set; }
+        public string ImageName { get; private set; }
         public decimal Price { get; private set; }
         public bool IsPublished { get; private set; }
 
@@ -35,9 +37,9 @@ namespace Sushi.Room.Domain.AggregatesModel.ProductAggregate
         public virtual User User { get; private set; }
         public virtual ICollection<ProductPriceChangeHistory> ProductPriceChangeHistories { get; private set; }
 
-        public static Product CreateNew(int categoryId, int userId, string title, string titleEng, string description, string descriptionEng, decimal price, bool isPublished)
+        public static Product CreateNew(int categoryId, int userId, string title, string titleEng, string description, string descriptionEng, string imageName, decimal price, bool isPublished)
         {
-            var product = new Product(categoryId, userId, title, titleEng, description, descriptionEng, price);
+            var product = new Product(categoryId, userId, title, titleEng, description, descriptionEng, imageName, price);
 
             product.SaveProductPriceChangeHistory(userId, price);
 
@@ -53,7 +55,7 @@ namespace Sushi.Room.Domain.AggregatesModel.ProductAggregate
             return product;
         }
 
-        public void UpdateMetaData(int categoryId, int userId, string title, string titleEng, string description, string descriptionEng, decimal price)
+        public void UpdateMetaData(int categoryId, int userId, string title, string titleEng, string description, string descriptionEng, string imageName, decimal price)
         {
             CategoryId = categoryId;
             UserId = userId;
@@ -61,6 +63,7 @@ namespace Sushi.Room.Domain.AggregatesModel.ProductAggregate
             TitleEng = titleEng;
             Description = description;
             DescriptionEng = descriptionEng;
+            ImageName = imageName;
             Price = price;
         }
 

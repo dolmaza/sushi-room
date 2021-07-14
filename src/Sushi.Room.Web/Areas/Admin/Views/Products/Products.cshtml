@@ -1,0 +1,28 @@
+@model ProductViewModel
+@{
+    ViewData["Title"] = "პროდუქტები";
+}
+
+@section Breadcrumbs
+{
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <span>@ViewData["Title"]</span>
+            </li>
+        </ul>
+    </div>
+}
+
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="actions">
+            <a class="btn btn-primary" asp-controller="Products" asp-action="Create"><i class="fa fa-plus"></i> დამატება</a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="card-body">
+            
+        </div>
+    </div>
+</div>

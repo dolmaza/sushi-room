@@ -15,10 +15,12 @@ namespace Sushi.Room.Application.Services
     {
         private readonly ICategoryRepository _repository;
         private readonly AppSettings _appSettings;
-        public CategoryService(ICategoryRepository repository, IOptions<AppSettings> appSettings)
+        private readonly IUploadService _uploadService;
+        public CategoryService(ICategoryRepository repository, IOptions<AppSettings> appSettings, IUploadService uploadService)
         {
             _repository = repository;
             _appSettings = appSettings.Value;
+            _uploadService = uploadService;
         }
 
         public async Task<List<CategoryDto>> GetCategoriesAsync()
@@ -42,8 +44,8 @@ namespace Sushi.Room.Application.Services
 
         public async Task<int> AddNewCategoryAsync(CategoryDto categoryDto)
         {
-            var imageName = GetImageUniqName(categoryDto.ImageName);
-            await SaveCategoryImageAsync(categoryDto.ImageBase64, imageName);
+            var imageName = _uploadService.GetImageUniqName(categoryDto.ImageName);
+            await _uploadService.SaveImageAsync(categoryDto.ImageBase64, imageName);
             
             var category = Category.CreateNew(categoryDto.Caption, categoryDto.CaptionEng, imageName, categoryDto.IsPublished);
 
@@ -57,8 +59,8 @@ namespace Sushi.Room.Application.Services
         {
             var category = await _repository.FindByIdAsync(categoryDto.Id);
 
-            var imageName = GetImageUniqName(categoryDto.ImageName);
-            await SaveCategoryImageAsync(categoryDto.ImageBase64, imageName, category.ImageName);
+            var imageName = _uploadService.GetImageUniqName(categoryDto.ImageName);
+            await _uploadService.SaveImageAsync(categoryDto.ImageBase64, imageName, category.ImageName);
 
             if (category == default)
             {
@@ -90,7 +92,7 @@ namespace Sushi.Room.Application.Services
                 throw new SushiRoomDomainException("კატეგორია ვერ მოიძებნა");
             }
             
-            DeleteImage(category.ImageName);
+            _uploadService.DeleteImage(category.ImageName);
 
             _repository.Remove(category);
             
@@ -131,40 +133,6 @@ namespace Sushi.Room.Application.Services
                     ? default 
                     : $"{_appSettings.WebsiteBaseUrl}{_appSettings.UploadFolderPath}{category.ImageName}"
             };
-        }
-
-        private async Task SaveCategoryImageAsync(string imageBase64, string newImageFileName, string oldImageFileName = default)
-        {
-            DeleteImage(oldImageFileName);
-
-            if (!string.IsNullOrEmpty(imageBase64))
-            {
-                await File.WriteAllBytesAsync(Path.Combine(_appSettings.UploadFolderPhysicalPath, newImageFileName), Convert.FromBase64String(imageBase64));
-            }
-        }
-
-        private void DeleteImage(string imageName)
-        {
-            var oldImagePath = string.IsNullOrEmpty(imageName)
-                ? default
-                : Path.Combine(_appSettings.UploadFolderPhysicalPath, imageName);
-            
-            if (!string.IsNullOrEmpty(oldImagePath) && File.Exists(oldImagePath))
-            {
-                File.Delete(oldImagePath);
-            }
-        }
-
-        private string GetImageUniqName(string imageName)
-        {
-            if (string.IsNullOrEmpty(imageName))
-            {
-                return default;
-            }
-            var extension = Path.GetExtension(imageName);
-            var imageNameWithoutExtension = Path.GetFileNameWithoutExtension(imageName);
-
-            return $"{imageNameWithoutExtension}-{Guid.NewGuid().ToString().Substring(0,8)}{extension}";
         }
     }
 }

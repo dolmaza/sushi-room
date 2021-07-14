@@ -14,6 +14,7 @@ using Sushi.Room.Domain.SeedWork;
 using Sushi.Room.Infrastructure;
 using Sushi.Room.Infrastructure.Repositories;
 using System.Threading.Tasks;
+using Sushi.Room.Domain.AggregatesModel.ProductAggregate;
 
 namespace Sushi.Room.Web
 {
@@ -38,6 +39,9 @@ namespace Sushi.Room.Web
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IUploadService, UploadService>();
 
 
             services.AddDbContext<SushiRoomDbContext>(options =>

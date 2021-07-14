@@ -4,6 +4,7 @@ using Sushi.Room.Domain.Extensions;
 using Sushi.Room.Infrastructure.EntityTypeConfigurations;
 using System;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace Sushi.Room.Infrastructure
 {
@@ -17,6 +18,17 @@ namespace Sushi.Room.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(UserEntityTypeConfiguration).Assembly);
+        }
+    }
+    
+    public class SushiRoomDbContextDesignFactory : IDesignTimeDbContextFactory<SushiRoomDbContext>
+    {
+        public SushiRoomDbContext CreateDbContext(string[] args)
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<SushiRoomDbContext>()
+                .UseNpgsql("Server=localhost;Port=5432;Database=SushiRoomDb;User Id=postgres;Password=1qaz!QAZ");
+
+            return new SushiRoomDbContext(optionsBuilder.Options);
         }
     }
 

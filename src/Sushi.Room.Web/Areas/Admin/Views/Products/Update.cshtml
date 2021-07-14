@@ -1,0 +1,22 @@
+@model ProductEditorModel
+@{
+    ViewData["Title"] = $"პროდუქტის რედაქტირება - '{Model.Product.Title}'";
+}
+@section Breadcrumbs
+{
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <a href="@Url.RouteUrl(RouteNames.Admin.Product.Products)">პროდუქტები</a>
+                <i class="fa fa-circle"></i>
+            </li>
+            <li>
+                <span>@ViewData["Title"]</span>
+            </li>
+        </ul>
+    </div>
+}
+
+<form asp-controller="Categories" asp-action="Update" method="post">
+    <partial name="_ProductEditorModel.cshtml" model="Model.Product" />
+</form>
