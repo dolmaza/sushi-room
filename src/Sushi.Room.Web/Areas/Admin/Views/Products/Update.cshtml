@@ -17,6 +17,17 @@
     </div>
 }
 
-<form asp-controller="Categories" asp-action="Update" method="post">
+<form asp-controller="Products" asp-action="Update" method="post">
     <partial name="_ProductEditorModel.cshtml" model="Model.Product" />
 </form>
+
+@section Scripts
+{
+    <script src="~/plugins/tinymce/tinymce.min.js"></script>
+    <script src="~/admin/scripts/Products/ProductEditorModel.js"></script>
+    <script>
+        $(function () {
+            ProductEditorModel.init();
+        });
+    </script>
+}

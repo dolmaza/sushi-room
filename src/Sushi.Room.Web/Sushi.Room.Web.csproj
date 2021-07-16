@@ -23,4 +23,8 @@
     <Folder Include="wwwroot\upload\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <TypeScriptCompile Include="wwwroot\plugins\tinymce\tinymce.d.ts" />
+  </ItemGroup>
+
 </Project>

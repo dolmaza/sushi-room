@@ -12,6 +12,12 @@ namespace Sushi.Room.Web.Validators.Products
                 .WithMessage("გთხოვთ შეავსოთ ველი")
                 .NotNull()
                 .WithMessage("გთხოვთ შეავსოთ ველი");
+            
+            RuleFor(product => product.CategoryId)
+                .NotEmpty()
+                .WithMessage("გთხოვთ შეავსოთ ველი")
+                .NotNull()
+                .WithMessage("გთხოვთ შეავსოთ ველი");
         }
     }
 }

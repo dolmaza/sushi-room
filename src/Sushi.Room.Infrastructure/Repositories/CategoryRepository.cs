@@ -24,5 +24,13 @@ namespace Sushi.Room.Infrastructure.Repositories
         {
             return await Query().Where(c => categoryIds.Contains(c.Id)).ToDictionaryAsync(key => key.Id, value => value);
         }
+
+        public async Task<List<KeyValuePair<int, string>>> GetCategoriesForDropDownAsync()
+        {
+            return await Query()
+                .Where(c => c.IsPublished)
+                .Select(c => new KeyValuePair<int, string>(c.Id, c.Caption))
+                .ToListAsync();
+        }
     }
 }

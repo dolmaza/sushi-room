@@ -13,10 +13,12 @@ namespace Sushi.Room.Web.Areas.Admin.Controllers
     public class ProductsController : AdminBaseController
     {
         private readonly IProductService _productService;
+        private readonly ICategoryService _categoryService;
 
-        public ProductsController(IProductService productService)
+        public ProductsController(IProductService productService, ICategoryService categoryService)
         {
             _productService = productService;
+            _categoryService = categoryService;
         }
 
         [HttpGet]
@@ -34,9 +36,15 @@ namespace Sushi.Room.Web.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("products/create", Name = RouteNames.Admin.Product.Create)]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View(new ProductEditorModel { Product = new ProductDto()});
+            return View(new ProductEditorModel
+            {
+                Product = new ProductDto
+                {
+                    Categories = await _categoryService.GetCategoriesForDropDownAsync()
+                }
+            });
         }
         
         [HttpPost]
@@ -58,6 +66,9 @@ namespace Sushi.Room.Web.Areas.Admin.Controllers
             catch (Exception)
             {
                 InitErrorMessage();
+                
+                product.Categories =  await _categoryService.GetCategoriesForDropDownAsync();
+
                 return View(new ProductEditorModel { Product = product });
             }
         }
@@ -72,6 +83,8 @@ namespace Sushi.Room.Web.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+            
+            productDto.Categories =  await _categoryService.GetCategoriesForDropDownAsync();
 
             return View(new ProductEditorModel { Product = productDto });
         }
@@ -82,6 +95,8 @@ namespace Sushi.Room.Web.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
+                product.Categories =  await _categoryService.GetCategoriesForDropDownAsync();
+                
                 return View(new ProductEditorModel { Product = product });
             }
 
@@ -95,11 +110,17 @@ namespace Sushi.Room.Web.Areas.Admin.Controllers
             catch (SushiRoomDomainException ex)
             {
                 InitErrorMessage(ex.Message);
+
+                product.Categories =  await _categoryService.GetCategoriesForDropDownAsync();
+
                 return View(new ProductEditorModel { Product = product });
             }
             catch (Exception)
             {
                 InitErrorMessage();
+
+                product.Categories =  await _categoryService.GetCategoriesForDropDownAsync();
+
                 return View(new ProductEditorModel { Product = product });
             }
         }

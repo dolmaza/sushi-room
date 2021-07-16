@@ -120,6 +120,11 @@ namespace Sushi.Room.Application.Services
             }
         }
 
+        public async Task<List<KeyValuePair<int, string>>> GetCategoriesForDropDownAsync()
+        {
+            return await _repository.GetCategoriesForDropDownAsync();
+        }
+
         private CategoryDto GetCategoryToCategoryDto(Category category)
         {
             return new CategoryDto

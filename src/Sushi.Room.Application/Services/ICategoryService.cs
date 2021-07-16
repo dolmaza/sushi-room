@@ -17,5 +17,7 @@ namespace Sushi.Room.Application.Services
         Task DeleteCategoryAsync(int id);
 
         Task SyncSortIndexesAsync(List<KeyValuePair<int, int>> sortIndexes);
+
+        Task<List<KeyValuePair<int, string>>> GetCategoriesForDropDownAsync();
     }
 }

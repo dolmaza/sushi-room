@@ -9,5 +9,7 @@ namespace Sushi.Room.Domain.AggregatesModel.CategoryAggregate
         Task<List<Category>> GetCategoriesAsync();
 
         Task<Dictionary<int, Category>> GetCategoriesByIdsAsDictionaryAsync(List<int> categoryIds);
+
+        Task<List<KeyValuePair<int, string>>> GetCategoriesForDropDownAsync();
     }
 }

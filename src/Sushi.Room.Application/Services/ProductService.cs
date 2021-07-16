@@ -55,7 +55,7 @@ namespace Sushi.Room.Application.Services
                     description: productDto.Description, 
                     descriptionEng: productDto.DescriptionEng, 
                     imageName: imageName, 
-                    price: productDto.Price, 
+                    price: productDto.Price ?? 0, 
                     isPublished: productDto.IsPublished
                 );
 
@@ -79,7 +79,7 @@ namespace Sushi.Room.Application.Services
 
             if (product.Price != productDto.Price)
             {
-                product.SaveProductPriceChangeHistory(userId, productDto.Price);
+                product.SaveProductPriceChangeHistory(userId, productDto.Price ?? 0);
             }
 
             product.UpdateMetaData
@@ -91,7 +91,7 @@ namespace Sushi.Room.Application.Services
                 description: productDto.Description, 
                 descriptionEng: productDto.DescriptionEng, 
                 imageName: imageName, 
-                price: productDto.Price
+                price: productDto.Price ?? 0
             );
 
             if (productDto.IsPublished)
@@ -136,7 +136,10 @@ namespace Sushi.Room.Application.Services
                 Description = product.Description,
                 DescriptionEng = product.DescriptionEng,
                 Price = product.Price,
-                IsPublished = product.IsPublished
+                IsPublished = product.IsPublished,
+                ImageUrl = string.IsNullOrEmpty(product.ImageName) 
+                    ? default 
+                    : $"{_appSettings.WebsiteBaseUrl}{_appSettings.UploadFolderPath}{product.ImageName}"
             };
         }
     }

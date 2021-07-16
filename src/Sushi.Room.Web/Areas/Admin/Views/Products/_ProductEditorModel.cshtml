@@ -1,2 +1,87 @@
 @model ProductDto
-
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="actions">
+            <button class="btn btn-primary" type="submit"><i class="fa fa-floppy-o"></i> შენახვა</button>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="card-body">
+            <input type="hidden" asp-for="Id" value="@Model.Id" />
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Title"></label>
+                        <input type="text" class="form-control" asp-for="Title" value="@Model.Title">
+                        <span class="text-danger" asp-validation-for="Title"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="TitleEng"></label>
+                        <input type="text" class="form-control" asp-for="TitleEng">
+                        <span class="text-danger" asp-validation-for="TitleEng"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Price"></label>
+                        <input type="text" class="form-control" asp-for="Price" value="@Model.Price">
+                        <span class="text-danger" asp-validation-for="Price"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="CategoryId"></label>
+                        <select class="form-control" asp-for="CategoryId" asp-items="Model.Categories.Select(item => new SelectListItem(item.Value, item.Key.ToString(), Model.CategoryId == item.Key))">
+                            <option value="">აირჩიე კატეგორია...</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="CategoryId"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Description"></label>
+                        <textarea class="form-control" asp-for="Description">@Model.Description</textarea>
+                        <span class="text-danger" asp-validation-for="Description"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="DescriptionEng"></label>
+                        <textarea class="form-control" asp-for="DescriptionEng">@Model.DescriptionEng</textarea>
+                        <span class="text-danger" asp-validation-for="DescriptionEng"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="ImageName"></label>
+                        <input type="file" class="form-control" id="product-image">
+                        <input type="hidden" asp-for="ImageName" >
+                        <input type="hidden" asp-for="ImageBase64" >
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="IsPublished"></label>
+                        <div>
+                            <input class="checkbox-bootstrap-switch" asp-for="IsPublished" type="checkbox" value="true" data-on-text="კი" data-off-text="არა">
+                            <span class="text-danger" asp-validation-for="IsPublished"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 text-center">
+                    <img src="@(string.IsNullOrEmpty(Model.ImageUrl) ? Html.Raw("#") : Html.Raw(Model.ImageUrl))" alt="Image" class="img-thumbnail @(string.IsNullOrEmpty(Model.ImageUrl) ? Html.Raw("hidden") : null)" id="product-image-preview" height="40%" width="40%">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
