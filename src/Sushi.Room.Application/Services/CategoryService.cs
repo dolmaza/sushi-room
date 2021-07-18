@@ -58,16 +58,21 @@ namespace Sushi.Room.Application.Services
         public async Task UpdateCategoryAsync(CategoryDto categoryDto)
         {
             var category = await _repository.FindByIdAsync(categoryDto.Id);
-
-            var imageName = _uploadService.GetImageUniqName(categoryDto.ImageName);
-            await _uploadService.SaveImageAsync(categoryDto.ImageBase64, imageName, category.ImageName);
-
+            
             if (category == default)
             {
                 throw new SushiRoomDomainException("კატეგორია ვერ მოიძებნა");
             }
 
-            category.UpdateMetaData(categoryDto.Caption, categoryDto.CaptionEng, imageName);
+            if (!string.IsNullOrEmpty(categoryDto.ImageBase64))
+            {
+                var imageName = _uploadService.GetImageUniqName(categoryDto.ImageName);
+                await _uploadService.SaveImageAsync(categoryDto.ImageBase64, imageName, category.ImageName);
+
+                category.SetImageName(imageName);
+            }
+            
+            category.UpdateMetaData(categoryDto.Caption, categoryDto.CaptionEng);
 
             if (categoryDto.IsPublished)
             {

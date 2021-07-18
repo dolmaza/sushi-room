@@ -23,9 +23,9 @@ namespace Sushi.Room.Web.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("products", Name = RouteNames.Admin.Product.Products)]
-        public async Task<IActionResult> Products()
+        public async Task<IActionResult> Products(string searchValue, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
-            var (products, totalCount) = await _productService.GetProductsAsync(default, 1, 10);
+            var (products, totalCount) = await _productService.GetProductsAsync(searchValue, pageNumber, pageSize);
             
             return View(new ProductViewModel
             {

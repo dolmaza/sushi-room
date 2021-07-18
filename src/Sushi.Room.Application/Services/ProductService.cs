@@ -68,10 +68,7 @@ namespace Sushi.Room.Application.Services
         public async Task UpdateProductAsync(int userId, ProductDto productDto)
         {
             var product = await _repository.FindByIdAsync(productDto.Id);
-
-            var imageName = _uploadService.GetImageUniqName(productDto.ImageName);
-            await _uploadService.SaveImageAsync(productDto.ImageBase64, imageName, product.ImageName);
-
+            
             if (product == default)
             {
                 throw new SushiRoomDomainException("პროდუცტი ვერ მოიძებნა");
@@ -82,6 +79,14 @@ namespace Sushi.Room.Application.Services
                 product.SaveProductPriceChangeHistory(userId, productDto.Price ?? 0);
             }
 
+            if (!string.IsNullOrEmpty(productDto.ImageBase64))
+            {
+                var imageName = _uploadService.GetImageUniqName(productDto.ImageName);
+                await _uploadService.SaveImageAsync(productDto.ImageBase64, imageName, product.ImageName);
+
+                product.SetImageName(imageName);
+            }
+
             product.UpdateMetaData
             (
                 categoryId: productDto.CategoryId, 
@@ -89,8 +94,7 @@ namespace Sushi.Room.Application.Services
                 title: productDto.Title, 
                 titleEng: productDto.TitleEng, 
                 description: productDto.Description, 
-                descriptionEng: productDto.DescriptionEng, 
-                imageName: imageName, 
+                descriptionEng: productDto.DescriptionEng,
                 price: productDto.Price ?? 0
             );
 

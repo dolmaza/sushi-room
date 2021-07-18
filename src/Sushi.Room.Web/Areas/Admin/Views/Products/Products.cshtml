@@ -14,6 +14,11 @@
     </div>
 }
 
+@section Styles
+{
+    <link rel="stylesheet" href="~/plugins/pagination/pagination.css">
+}
+
 <div class="portlet light">
     <div class="portlet-title">
         <div class="actions">
@@ -22,7 +27,60 @@
     </div>
     <div class="portlet-body">
         <div class="card-body">
-            
+            <table id="categories-table" class="table table-bordered table-responsive table-hover">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th width="70">სურათი</th>
+                    <th>სათაური</th>
+                    <th>კატეგორია</th>
+                    <th>ფასი</th>
+                    <th>გამოქვეყნებულია?</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody id="categories-table-body">
+                @foreach (var item in Model.Products)
+                {
+                    <tr data-id="@item.Id">
+                        <td>@item.Id</td>
+                        <td width="70">
+                            @if (!string.IsNullOrEmpty(item.ImageUrl))
+                            {
+                                <img src="@item.ImageUrl" class="img-thumbnail" alt="Image" height="50" width="50">
+                            }
+                        </td>
+                        <td>@item.Title</td>
+                        <td>@item.CategoryCaption</td>
+                        <td>@item.Price</td>
+                        <td class="text-center">
+                            <label class="mt-checkbox mt-checkbox-outline">
+                                <input type="checkbox" @(item.IsPublished ? Html.Raw("checked") : null)>
+                                <span></span>
+                            </label>
+                        </td>
+                        <td>
+                            <a href="@Url.RouteUrl(RouteNames.Admin.Product.Update, new {id = item.Id})" class="btn btn-xs btn-primary"> <i class="fa fa-pencil"></i></a>
+                            <button class="btn btn-xs btn-danger delete-btn" data-url="@Url.RouteUrl(RouteNames.Admin.Product.Delete, new {id = item.Id})">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+            <div id="pagination-container"></div>
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+    <script src="~/plugins/pagination/pagination.min.js"></script>
+    <script src="~/admin/scripts/Products/ProductViewModel.js"></script>
+    <script>
+        $(function() {
+            ProductViewModel.init('@Url.RouteUrl(RouteNames.Admin.Product.Products)', @Model.TotalCount);
+        });
+    </script>
+}

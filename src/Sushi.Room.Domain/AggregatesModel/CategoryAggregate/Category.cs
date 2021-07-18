@@ -46,11 +46,10 @@ namespace Sushi.Room.Domain.AggregatesModel.CategoryAggregate
             SortIndex = sortIndex;
         }
 
-        public void UpdateMetaData(string caption, string captionEng, string imageName)
+        public void UpdateMetaData(string caption, string captionEng)
         {
             Caption = caption;
             CaptionEng = captionEng;
-            ImageName = imageName;
         }
 
         public void MarkAsPublished()
@@ -61,6 +60,11 @@ namespace Sushi.Room.Domain.AggregatesModel.CategoryAggregate
         public void MarkAsUnpublished()
         {
             IsPublished = false;
+        }
+
+        public void SetImageName(string imageName)
+        {
+            ImageName = imageName;
         }
     }
 }

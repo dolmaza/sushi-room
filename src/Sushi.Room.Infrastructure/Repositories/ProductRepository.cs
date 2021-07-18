@@ -21,7 +21,8 @@ namespace Sushi.Room.Infrastructure.Repositories
                             || p.Description.Contains(searchValue)
                             || p.DescriptionEng.Contains(searchValue)
                             || p.Category.Caption.Contains(searchValue)
-                            || p.Category.CaptionEng.Contains(searchValue));
+                            || p.Category.CaptionEng.Contains(searchValue))
+                .OrderByDescending(ob => ob.DateOfCreate);
 
             var count = query.Count();
 

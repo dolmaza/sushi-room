@@ -55,7 +55,7 @@ namespace Sushi.Room.Domain.AggregatesModel.ProductAggregate
             return product;
         }
 
-        public void UpdateMetaData(int categoryId, int userId, string title, string titleEng, string description, string descriptionEng, string imageName, decimal price)
+        public void UpdateMetaData(int categoryId, int userId, string title, string titleEng, string description, string descriptionEng, decimal price)
         {
             CategoryId = categoryId;
             UserId = userId;
@@ -63,7 +63,6 @@ namespace Sushi.Room.Domain.AggregatesModel.ProductAggregate
             TitleEng = titleEng;
             Description = description;
             DescriptionEng = descriptionEng;
-            ImageName = imageName;
             Price = price;
         }
 
@@ -89,6 +88,11 @@ namespace Sushi.Room.Domain.AggregatesModel.ProductAggregate
             {
                 ProductPriceChangeHistories.Add(productPriceChangeHistory);
             }
+        }
+
+        public void SetImageName(string imageName)
+        {
+            ImageName = imageName;
         }
     }
 }
