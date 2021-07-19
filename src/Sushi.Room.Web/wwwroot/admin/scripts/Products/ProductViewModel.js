@@ -1,6 +1,8 @@
 var ProductViewModel = (function (){
-    function init(productsUrl, totalCount) {
-        initPagination(productsUrl, totalCount);
+    function init(productsUrl, totalCount, currentPage) {
+        initSearch(productsUrl);
+
+        initPagination(productsUrl, totalCount, currentPage);
 
         $('.delete-btn').click( function (e) {
             e.preventDefault();
@@ -38,8 +40,7 @@ var ProductViewModel = (function (){
         });
     }
     
-    function initPagination(productsUrl, totalCount) {
-        var prevPageNumber = +getParameterByName('pageNumber');
+    function initPagination(productsUrl, totalCount, currentPage) {
         $('#pagination-container').pagination({
             dataSource: function (done) {
                 var result = [];
@@ -49,22 +50,23 @@ var ProductViewModel = (function (){
                 
                 done(result);
             },
-            pageNumber: prevPageNumber ? prevPageNumber : 1,
+            pageNumber: currentPage ? currentPage : 1,
             callback: function(data, pagination) {
-                if(prevPageNumber !== pagination.pageNumber){
+                if(currentPage !== pagination.pageNumber){
                     window.location = productsUrl + '?pageNumber=' + pagination.pageNumber;
                 }
             }
         });
     }
-
-    function getParameterByName(name, url = window.location.href) {
-        name = name.replace(/[\[\]]/g, '\\$&');
-        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-            results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    
+    function initSearch(productsUrl) {
+        console.log('initSearch');
+        $('#search-input').on('keypress',function(e) {
+            if(e.which == 13) {
+                var searchValue = $(this).val();
+                window.location = productsUrl +'?searchValue=' + searchValue + '&pageNumber=' + 1;
+            }
+        });
     }
     
     return {

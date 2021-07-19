@@ -7,5 +7,7 @@ namespace Sushi.Room.Web.Areas.Admin.Models.Products
     {
         public List<ProductDto> Products { get; set; }
         public int TotalCount { get; set; }
+        public string SearchValue { get; set; }
+        public int CurrentPage { get; set; }
     }
 }

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Sushi.Room.Application.Services;
 using Sushi.Room.Application.Services.DataModels;
 using Sushi.Room.Domain.Exceptions;
-using Sushi.Room.Web.Areas.Admin.Models.Categories;
 using Sushi.Room.Web.Areas.Admin.Models.Products;
 using Sushi.Room.Web.Infrastructure;
 
@@ -30,7 +29,9 @@ namespace Sushi.Room.Web.Areas.Admin.Controllers
             return View(new ProductViewModel
             {
                 Products = products,
-                TotalCount = totalCount
+                TotalCount = totalCount,
+                SearchValue = searchValue,
+                CurrentPage = pageNumber
             });
         }
 
