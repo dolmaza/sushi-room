@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Sushi.Room.Application.Constants;
+using Sushi.Room.Web.Infrastructure;
 using Sushi.Room.Web.Models;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Sushi.Room.Web.Controllers
 {
@@ -20,12 +18,7 @@ namespace Sushi.Room.Web.Controllers
 
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
+            return RedirectToRoute(RouteNames.WebCategories.Categories, new { culture = Cultures.ka });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

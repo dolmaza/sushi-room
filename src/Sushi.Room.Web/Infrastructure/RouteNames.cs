@@ -40,5 +40,15 @@
                 public const string Delete = "ProductsDelete";
             }
         }
+
+        public struct WebCategories
+        {
+            public const string Categories = "WebCategoriesPage";
+        }
+
+        public struct WebProducts
+        {
+            public const string Products = "ProductsPage";
+        }
     }
 }

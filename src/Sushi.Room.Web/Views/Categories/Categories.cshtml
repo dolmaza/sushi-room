@@ -1,0 +1,7 @@
+﻿@model PublishedCategoryViewModel
+
+@foreach (var category in Model.Categories)
+{
+    <img src="@category.ImageUrl" alt="Image" width="50" height="50" />
+    <a href="@Url.RouteUrl(RouteNames.WebProducts.Products, new { culture = Model.Culture})">@category.Caption</a>
+}

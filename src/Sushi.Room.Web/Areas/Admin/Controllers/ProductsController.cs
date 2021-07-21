@@ -1,11 +1,11 @@
-using System;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Sushi.Room.Application.Services;
 using Sushi.Room.Application.Services.DataModels;
 using Sushi.Room.Domain.Exceptions;
 using Sushi.Room.Web.Areas.Admin.Models.Products;
 using Sushi.Room.Web.Infrastructure;
+using System;
+using System.Threading.Tasks;
 
 namespace Sushi.Room.Web.Areas.Admin.Controllers
 {
@@ -25,7 +25,7 @@ namespace Sushi.Room.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Products(string searchValue, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
             var (products, totalCount) = await _productService.GetProductsAsync(searchValue, pageNumber, pageSize);
-            
+
             return View(new ProductViewModel
             {
                 Products = products,
@@ -47,13 +47,15 @@ namespace Sushi.Room.Web.Areas.Admin.Controllers
                 }
             });
         }
-        
+
         [HttpPost]
         [Route("products/create", Name = RouteNames.Admin.Product.Create)]
         public async Task<IActionResult> Create(ProductDto product)
         {
             if (!ModelState.IsValid)
             {
+                product.Categories = await _categoryService.GetCategoriesForDropDownAsync();
+
                 return View(new ProductEditorModel { Product = product });
             }
 
@@ -67,13 +69,13 @@ namespace Sushi.Room.Web.Areas.Admin.Controllers
             catch (Exception)
             {
                 InitErrorMessage();
-                
-                product.Categories =  await _categoryService.GetCategoriesForDropDownAsync();
+
+                product.Categories = await _categoryService.GetCategoriesForDropDownAsync();
 
                 return View(new ProductEditorModel { Product = product });
             }
         }
-        
+
         [HttpGet]
         [Route("products/{id}/update", Name = RouteNames.Admin.Product.Update)]
         public async Task<IActionResult> Update(int id)
@@ -84,8 +86,8 @@ namespace Sushi.Room.Web.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            
-            productDto.Categories =  await _categoryService.GetCategoriesForDropDownAsync();
+
+            productDto.Categories = await _categoryService.GetCategoriesForDropDownAsync();
 
             return View(new ProductEditorModel { Product = productDto });
         }
@@ -96,8 +98,8 @@ namespace Sushi.Room.Web.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                product.Categories =  await _categoryService.GetCategoriesForDropDownAsync();
-                
+                product.Categories = await _categoryService.GetCategoriesForDropDownAsync();
+
                 return View(new ProductEditorModel { Product = product });
             }
 
@@ -112,7 +114,7 @@ namespace Sushi.Room.Web.Areas.Admin.Controllers
             {
                 InitErrorMessage(ex.Message);
 
-                product.Categories =  await _categoryService.GetCategoriesForDropDownAsync();
+                product.Categories = await _categoryService.GetCategoriesForDropDownAsync();
 
                 return View(new ProductEditorModel { Product = product });
             }
@@ -120,12 +122,12 @@ namespace Sushi.Room.Web.Areas.Admin.Controllers
             {
                 InitErrorMessage();
 
-                product.Categories =  await _categoryService.GetCategoriesForDropDownAsync();
+                product.Categories = await _categoryService.GetCategoriesForDropDownAsync();
 
                 return View(new ProductEditorModel { Product = product });
             }
         }
-        
+
         [HttpPost]
         [Route("products/{id}/delete", Name = RouteNames.Admin.Product.Delete)]
         public async Task<IActionResult> Delete(int id)

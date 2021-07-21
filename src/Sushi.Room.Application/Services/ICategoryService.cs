@@ -19,5 +19,7 @@ namespace Sushi.Room.Application.Services
         Task SyncSortIndexesAsync(List<KeyValuePair<int, int>> sortIndexes);
 
         Task<List<KeyValuePair<int, string>>> GetCategoriesForDropDownAsync();
+
+        Task<List<PublishedCategoryDto>> GetPublishedCategoriesByCultureAsync(string culture, int pageNumber, int pageSize);
     }
 }

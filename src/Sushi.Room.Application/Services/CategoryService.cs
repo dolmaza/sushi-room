@@ -1,11 +1,10 @@
-﻿using System;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
+using Sushi.Room.Application.Constants;
 using Sushi.Room.Application.Options;
 using Sushi.Room.Application.Services.DataModels;
 using Sushi.Room.Domain.AggregatesModel.CategoryAggregate;
 using Sushi.Room.Domain.Exceptions;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -46,7 +45,7 @@ namespace Sushi.Room.Application.Services
         {
             var imageName = _uploadService.GetImageUniqName(categoryDto.ImageName);
             await _uploadService.SaveImageAsync(categoryDto.ImageBase64, imageName);
-            
+
             var category = Category.CreateNew(categoryDto.Caption, categoryDto.CaptionEng, imageName, categoryDto.IsPublished);
 
             await _repository.AddAsync(category);
@@ -58,7 +57,7 @@ namespace Sushi.Room.Application.Services
         public async Task UpdateCategoryAsync(CategoryDto categoryDto)
         {
             var category = await _repository.FindByIdAsync(categoryDto.Id);
-            
+
             if (category == default)
             {
                 throw new SushiRoomDomainException("კატეგორია ვერ მოიძებნა");
@@ -71,7 +70,7 @@ namespace Sushi.Room.Application.Services
 
                 category.SetImageName(imageName);
             }
-            
+
             category.UpdateMetaData(categoryDto.Caption, categoryDto.CaptionEng);
 
             if (categoryDto.IsPublished)
@@ -96,11 +95,11 @@ namespace Sushi.Room.Application.Services
             {
                 throw new SushiRoomDomainException("კატეგორია ვერ მოიძებნა");
             }
-            
+
             _uploadService.DeleteImage(category.ImageName);
 
             _repository.Remove(category);
-            
+
             await _repository.SaveChangesAsync();
         }
 
@@ -130,6 +129,17 @@ namespace Sushi.Room.Application.Services
             return await _repository.GetCategoriesForDropDownAsync();
         }
 
+        public async Task<List<PublishedCategoryDto>> GetPublishedCategoriesByCultureAsync(string culture, int pageNumber, int pageSize)
+        {
+            var categories = await _repository.GetPublishedCategoriesAsync(pageNumber, pageSize);
+
+            return categories.Select(category => new PublishedCategoryDto
+            {
+                Caption = GetCategoryCaptionByCulture(culture, category),
+                ImageUrl = GetImageUrl(category.ImageName)
+            }).ToList();
+        }
+
         private CategoryDto GetCategoryToCategoryDto(Category category)
         {
             return new CategoryDto
@@ -139,10 +149,22 @@ namespace Sushi.Room.Application.Services
                 CaptionEng = category.CaptionEng,
                 IsPublished = category.IsPublished,
                 SortIndex = category.SortIndex,
-                ImageUrl = string.IsNullOrEmpty(category.ImageName) 
-                    ? default 
-                    : $"{_appSettings.WebsiteBaseUrl}{_appSettings.UploadFolderPath}{category.ImageName}"
+                ImageUrl = GetImageUrl(category.ImageName)
             };
         }
+
+        private string GetCategoryCaptionByCulture(string culture, Category category)
+        {
+            return culture == Cultures.ka
+                ? category.Caption
+                :
+                culture == Cultures.en
+                    ? category.CaptionEng
+                    : category.Caption;
+        }
+
+        private string GetImageUrl(string imageName) => string.IsNullOrEmpty(imageName)
+            ? default
+            : $"{_appSettings.WebsiteBaseUrl}{_appSettings.UploadFolderPath}{imageName}";
     }
 }

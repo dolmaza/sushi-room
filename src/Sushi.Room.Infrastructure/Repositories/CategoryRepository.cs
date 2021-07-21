@@ -32,5 +32,13 @@ namespace Sushi.Room.Infrastructure.Repositories
                 .Select(c => new KeyValuePair<int, string>(c.Id, c.Caption))
                 .ToListAsync();
         }
+
+        public async Task<List<Category>> GetPublishedCategoriesAsync(int pageNumber, int pageSize)
+        {
+            return await Query()
+                .Where(c => c.IsPublished)
+                .OrderBy(ob => ob.SortIndex)
+                .ThenBy(ob => ob.DateOfCreate).Skip((pageNumber - 1) * pageSize).ToListAsync();
+        }
     }
 }

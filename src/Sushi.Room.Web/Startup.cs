@@ -2,19 +2,25 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Sushi.Room.Application.Constants;
 using Sushi.Room.Application.Options;
 using Sushi.Room.Application.Services;
 using Sushi.Room.Domain.AggregatesModel.CategoryAggregate;
+using Sushi.Room.Domain.AggregatesModel.ProductAggregate;
 using Sushi.Room.Domain.AggregatesModel.UserAggregate;
 using Sushi.Room.Domain.SeedWork;
 using Sushi.Room.Infrastructure;
 using Sushi.Room.Infrastructure.Repositories;
+using Sushi.Room.Web.Infrastructure;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
-using Sushi.Room.Domain.AggregatesModel.ProductAggregate;
 
 namespace Sushi.Room.Web
 {
@@ -31,8 +37,12 @@ namespace Sushi.Room.Web
         {
             services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
 
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+
             services.AddControllersWithViews()
-                .AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining(typeof(Startup)).ConfigureClientsideValidation(enabled: false));
+                .AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining(typeof(Startup)).ConfigureClientsideValidation(enabled: false))
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization();
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IUserRepository, UserRepository>();
@@ -70,6 +80,21 @@ namespace Sushi.Room.Web
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+            var cultures = new List<CultureInfo> {
+                new CultureInfo(Cultures.ka),
+                new CultureInfo(Cultures.en)
+            };
+
+            app.UseRequestLocalization(options =>
+            {
+                options.DefaultRequestCulture = new RequestCulture(Cultures.ka);
+                options.SupportedCultures = cultures;
+                options.SupportedUICultures = cultures;
+                options.RequestCultureProviders.Insert(0, new RouteValueRequestCultureProvider() { Options = options });
+
+            });
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -83,7 +108,7 @@ namespace Sushi.Room.Web
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{culture=ka}/{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapControllerRoute(
                     name: "Admin",
