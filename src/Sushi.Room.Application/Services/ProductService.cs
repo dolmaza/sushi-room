@@ -1,11 +1,12 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
+using Sushi.Room.Application.Constants;
 using Sushi.Room.Application.Options;
 using Sushi.Room.Application.Services.DataModels;
 using Sushi.Room.Domain.AggregatesModel.ProductAggregate;
 using Sushi.Room.Domain.Exceptions;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Sushi.Room.Application.Services
 {
@@ -45,17 +46,17 @@ namespace Sushi.Room.Application.Services
         {
             var imageName = _uploadService.GetImageUniqName(productDto.ImageName);
             await _uploadService.SaveImageAsync(productDto.ImageBase64, imageName);
-            
+
             var product = Product.CreateNew
                 (
-                    categoryId: productDto.CategoryId, 
-                    userId: userId, 
-                    title: productDto.Title, 
-                    titleEng: productDto.TitleEng, 
-                    description: productDto.Description, 
-                    descriptionEng: productDto.DescriptionEng, 
-                    imageName: imageName, 
-                    price: productDto.Price ?? 0, 
+                    categoryId: productDto.CategoryId,
+                    userId: userId,
+                    title: productDto.Title,
+                    titleEng: productDto.TitleEng,
+                    description: productDto.Description,
+                    descriptionEng: productDto.DescriptionEng,
+                    imageName: imageName,
+                    price: productDto.Price ?? 0,
                     isPublished: productDto.IsPublished
                 );
 
@@ -68,7 +69,7 @@ namespace Sushi.Room.Application.Services
         public async Task UpdateProductAsync(int userId, ProductDto productDto)
         {
             var product = await _repository.FindByIdAsync(productDto.Id);
-            
+
             if (product == default)
             {
                 throw new SushiRoomDomainException("პროდუცტი ვერ მოიძებნა");
@@ -89,11 +90,11 @@ namespace Sushi.Room.Application.Services
 
             product.UpdateMetaData
             (
-                categoryId: productDto.CategoryId, 
-                userId: userId, 
-                title: productDto.Title, 
-                titleEng: productDto.TitleEng, 
-                description: productDto.Description, 
+                categoryId: productDto.CategoryId,
+                userId: userId,
+                title: productDto.Title,
+                titleEng: productDto.TitleEng,
+                description: productDto.Description,
                 descriptionEng: productDto.DescriptionEng,
                 price: productDto.Price ?? 0
             );
@@ -106,12 +107,12 @@ namespace Sushi.Room.Application.Services
             {
                 product.MarkAsUnpublished();
             }
-            
+
             _repository.Update(product);
 
             await _repository.SaveChangesAsync();
         }
-        
+
         public async Task DeleteProductAsync(int id)
         {
             var product = await _repository.FindByIdAsync(id);
@@ -120,12 +121,26 @@ namespace Sushi.Room.Application.Services
             {
                 throw new SushiRoomDomainException("პროდუქტი ვერ მოიძებნა");
             }
-            
+
             _uploadService.DeleteImage(product.ImageName);
 
             _repository.Remove(product);
-            
+
             await _repository.SaveChangesAsync();
+        }
+
+        public async Task<List<PublishedProductDto>> GetPublishedProductsByCategoryAsync(string culture, int categoryId, int pageNumber, int pageSize)
+        {
+            var products = await _repository.GetPublishedProductsByCategoryAsync(categoryId, pageNumber, pageSize);
+
+            return products.Select(product => new PublishedProductDto
+            {
+                Id = product.Id,
+                Title = GetProductTitleByCulture(culture, product),
+                Description = GetProductDescriptionByCulture(culture, product),
+                ImageUrl = GetImageUrl(product.ImageName),
+                Price = product.Price
+            }).ToList();
         }
 
         private ProductDto GetProductDtoFromProduct(Product product)
@@ -141,10 +156,34 @@ namespace Sushi.Room.Application.Services
                 DescriptionEng = product.DescriptionEng,
                 Price = product.Price,
                 IsPublished = product.IsPublished,
-                ImageUrl = string.IsNullOrEmpty(product.ImageName) 
-                    ? default 
+                ImageUrl = string.IsNullOrEmpty(product.ImageName)
+                    ? default
                     : $"{_appSettings.WebsiteBaseUrl}{_appSettings.UploadFolderPath}{product.ImageName}"
             };
         }
+
+        private string GetProductTitleByCulture(string culture, Product product)
+        {
+            return culture switch
+            {
+                Cultures.ka => product.Title,
+                Cultures.en => product.TitleEng,
+                _ => product.Title
+            };
+        }
+
+        private string GetProductDescriptionByCulture(string culture, Product product)
+        {
+            return culture switch
+            {
+                Cultures.ka => product.Description,
+                Cultures.en => product.DescriptionEng,
+                _ => product.Title
+            };
+        }
+
+        private string GetImageUrl(string imageName) => string.IsNullOrEmpty(imageName)
+            ? default
+            : $"{_appSettings.WebsiteBaseUrl}{_appSettings.UploadFolderPath}{imageName}";
     }
 }

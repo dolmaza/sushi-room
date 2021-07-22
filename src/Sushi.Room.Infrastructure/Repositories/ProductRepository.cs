@@ -1,8 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+using Sushi.Room.Domain.AggregatesModel.ProductAggregate;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Sushi.Room.Domain.AggregatesModel.ProductAggregate;
 
 namespace Sushi.Room.Infrastructure.Repositories
 {
@@ -32,6 +32,17 @@ namespace Sushi.Room.Infrastructure.Repositories
                 .ToListAsync();
 
             return (products, count);
+        }
+
+        public async Task<List<Product>> GetPublishedProductsByCategoryAsync(int categoryId, int pageNumber, int pageSize)
+        {
+            return await Query()
+                 .Where(p => p.CategoryId == categoryId)
+                 .Where(p => p.IsPublished)
+                 .Skip((pageNumber - 1) * pageSize)
+                 .Take(pageSize)
+                 .OrderByDescending(ob => ob.DateOfCreate)
+                 .ToListAsync();
         }
     }
 }

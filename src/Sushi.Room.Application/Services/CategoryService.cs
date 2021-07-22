@@ -135,6 +135,7 @@ namespace Sushi.Room.Application.Services
 
             return categories.Select(category => new PublishedCategoryDto
             {
+                Id = category.Id,
                 Caption = GetCategoryCaptionByCulture(culture, category),
                 ImageUrl = GetImageUrl(category.ImageName)
             }).ToList();
@@ -155,12 +156,12 @@ namespace Sushi.Room.Application.Services
 
         private string GetCategoryCaptionByCulture(string culture, Category category)
         {
-            return culture == Cultures.ka
-                ? category.Caption
-                :
-                culture == Cultures.en
-                    ? category.CaptionEng
-                    : category.Caption;
+            return culture switch
+            {
+                Cultures.ka => category.Caption,
+                Cultures.en => category.CaptionEng,
+                _ => category.Caption
+            };
         }
 
         private string GetImageUrl(string imageName) => string.IsNullOrEmpty(imageName)

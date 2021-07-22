@@ -1,0 +1,11 @@
+﻿@model PublishedProductViewModel
+
+@foreach (var product in Model.Products)
+{
+    <img src="@product.ImageUrl" alt="Image" width="50" height="50" />
+    <p>
+        <a href="@Url.RouteUrl(RouteNames.WebProducts.ProductDetails, new { culture = Model.Culture, categoryId = Model.CategoryId, productId = product.Id})">@product.Title</a>
+    </p>
+    <p>@product.Price ₾</p>
+    <p>@Html.Raw(product.Description)</p>
+}

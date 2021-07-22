@@ -1,6 +1,6 @@
+using Sushi.Room.Application.Services.DataModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Sushi.Room.Application.Services.DataModels;
 
 namespace Sushi.Room.Application.Services
 {
@@ -15,5 +15,7 @@ namespace Sushi.Room.Application.Services
         Task UpdateProductAsync(int userId, ProductDto productDto);
 
         Task DeleteProductAsync(int id);
+
+        Task<List<PublishedProductDto>> GetPublishedProductsByCategoryAsync(string culture, int categoryId, int pageNumber, int pageSize);
     }
 }

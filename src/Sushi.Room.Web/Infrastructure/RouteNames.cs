@@ -48,7 +48,8 @@
 
         public struct WebProducts
         {
-            public const string Products = "ProductsPage";
+            public const string Products = "WebProductsPage";
+            public const string ProductDetails = "WebProductDetails";
         }
     }
 }

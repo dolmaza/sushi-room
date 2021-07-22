@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Sushi.Room.Application.Constants;
 using Sushi.Room.Application.Services;
 using Sushi.Room.Web.Infrastructure;
 using Sushi.Room.Web.Models.Categories;
@@ -18,7 +19,7 @@ namespace Sushi.Room.Web.Controllers
         [HttpGet]
         [Route("")]
         [Route("{culture}/categories", Name = RouteNames.WebCategories.Categories)]
-        public async Task<IActionResult> Categories(string culture)
+        public async Task<IActionResult> Categories(string culture = Cultures.ka)
         {
             return View(new PublishedCategoryViewModel
             {
