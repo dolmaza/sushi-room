@@ -21,5 +21,7 @@ namespace Sushi.Room.Application.Services
         Task<List<KeyValuePair<int, string>>> GetCategoriesForDropDownAsync();
 
         Task<List<PublishedCategoryDto>> GetPublishedCategoriesByCultureAsync(string culture, int pageNumber, int pageSize);
+
+        Task<PublishedCategoryDto> GetSinglePublishedCategoryByIdAsync(string culture, int id);
     }
 }

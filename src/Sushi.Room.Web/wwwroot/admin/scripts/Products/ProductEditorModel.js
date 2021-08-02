@@ -1,6 +1,7 @@
 var ProductEditorModel = (function() {
     function init() {
         initBootstrapSwitch();
+        initNumericInput();
         initTinymce('#Description');
         initTinymce('#DescriptionEng');
         $('#product-image').change(function (){
@@ -19,6 +20,10 @@ var ProductEditorModel = (function() {
 
     function initBootstrapSwitch() {
         $(".checkbox-bootstrap-switch").bootstrapSwitch();
+    }
+    
+    function initNumericInput() {
+        $('#Price, #DiscountPercent').numericInput({ allowFloat: true });
     }
     
     function initTinymce(selector) {

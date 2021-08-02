@@ -57,9 +57,6 @@ namespace Sushi.Room.Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("integer");
-
                     b.Property<DateTimeOffset>("DateOfCreate")
                         .HasColumnType("timestamp with time zone");
 
@@ -68,6 +65,9 @@ namespace Sushi.Room.Infrastructure.Migrations
 
                     b.Property<string>("DescriptionEng")
                         .HasColumnType("text");
+
+                    b.Property<decimal?>("DiscountPercent")
+                        .HasColumnType("numeric");
 
                     b.Property<string>("ImageName")
                         .HasColumnType("text");
@@ -90,11 +90,38 @@ namespace Sushi.Room.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Sushi.Room.Domain.AggregatesModel.ProductAggregate.ProductCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset>("DateOfCreate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SortIndex")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("CategoryId", "ProductId")
+                        .IsUnique();
+
+                    b.ToTable("ProductCategories");
                 });
 
             modelBuilder.Entity("Sushi.Room.Domain.AggregatesModel.ProductAggregate.ProductPriceChangeHistory", b =>
@@ -164,21 +191,32 @@ namespace Sushi.Room.Infrastructure.Migrations
 
             modelBuilder.Entity("Sushi.Room.Domain.AggregatesModel.ProductAggregate.Product", b =>
                 {
-                    b.HasOne("Sushi.Room.Domain.AggregatesModel.CategoryAggregate.Category", "Category")
-                        .WithMany("Products")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Sushi.Room.Domain.AggregatesModel.UserAggregate.User", "User")
                         .WithMany("Products")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Sushi.Room.Domain.AggregatesModel.ProductAggregate.ProductCategory", b =>
+                {
+                    b.HasOne("Sushi.Room.Domain.AggregatesModel.CategoryAggregate.Category", "Category")
+                        .WithMany("ProductCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sushi.Room.Domain.AggregatesModel.ProductAggregate.Product", "Product")
+                        .WithMany("ProductCategories")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
 
-                    b.Navigation("User");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Sushi.Room.Domain.AggregatesModel.ProductAggregate.ProductPriceChangeHistory", b =>
@@ -202,11 +240,13 @@ namespace Sushi.Room.Infrastructure.Migrations
 
             modelBuilder.Entity("Sushi.Room.Domain.AggregatesModel.CategoryAggregate.Category", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("ProductCategories");
                 });
 
             modelBuilder.Entity("Sushi.Room.Domain.AggregatesModel.ProductAggregate.Product", b =>
                 {
+                    b.Navigation("ProductCategories");
+
                     b.Navigation("ProductPriceChangeHistories");
                 });
 

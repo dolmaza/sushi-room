@@ -68,4 +68,14 @@ body {
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
+  background-color: #8CA1A1;
+}
+
+.navbar {
+  background-color: #8CA1A1;
+}
+
+.breadcrumb-item a {
+  text-decoration: none;
+  color: #3E4348;
 }

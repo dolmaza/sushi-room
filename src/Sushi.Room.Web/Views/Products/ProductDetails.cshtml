@@ -1,1 +1,36 @@
-﻿
+﻿@model PublishedProductDetailViewModel
+
+@section Styles
+{
+  <link rel="stylesheet" href="~/css/Products/ProductDetail.css">
+}
+
+@section Breadcrambs
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="@Url.RouteUrl(RouteNames.WebCategories.Categories, new {culture = Model.Culture})">@localizer["Product_Details_Breadcrambs_Home"]</a></li>
+        <li class="breadcrumb-item"><a href="@Url.RouteUrl(RouteNames.WebProducts.Products, new {culture = Model.Culture, categoryId  = Model.CategoryId})">@Model.CategoryCaption</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Model.Product.Title</li>
+    </ol>
+}
+
+
+
+<div class="wrapper">
+  <div class="product-img">
+    <img src="@Model.Product.ImageUrl" height="420" width="327">
+  </div>
+  <div class="product-info">
+    <div class="product-text">
+      <h1>@Model.Product.Title</h1>
+      <h2>@Model.CategoryCaption</h2>
+      <p class="product-price"><span>78</span> $</p>
+      <p class="product-description">@Html.Raw(Model.Product.Description)</p>
+    </div>
+    <div class="product-price-btn">
+      <button type="button">buy now</button>
+    </div>
+  </div>
+</div> 
+
+

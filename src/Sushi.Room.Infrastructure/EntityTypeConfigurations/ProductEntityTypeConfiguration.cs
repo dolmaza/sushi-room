@@ -19,11 +19,6 @@ namespace Sushi.Room.Infrastructure.EntityTypeConfigurations
                 .WithMany(user => user.Products)
                 .HasForeignKey(product => product.UserId)
                 .IsRequired();
-
-            builder.HasOne(product => product.Category)
-                .WithMany(user => user.Products)
-                .HasForeignKey(product => product.CategoryId)
-                .IsRequired();
         }
     }
 }

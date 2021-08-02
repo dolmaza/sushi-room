@@ -1,0 +1,28 @@
+.category-box {
+    position: relative;
+    max-width: 540px;
+    margin: 15px auto;
+}
+
+.category-box .content {
+    position: absolute;
+    bottom: 0;
+    background: rgb(0, 0, 0); /* Fallback color */
+    background: rgba(0, 0, 0, 0.5); /* Black background with 0.5 opacity */
+    color: #f1f1f1;
+    width: 100%;
+    padding: 15px;
+}
+.category-box .category-image {
+    width:100%;
+    border-radius: 5px;
+}
+
+.category-box .content {    
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.category-box .content .category-title {
+    text-align:center;
+}

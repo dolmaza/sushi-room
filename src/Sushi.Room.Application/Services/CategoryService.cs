@@ -133,12 +133,19 @@ namespace Sushi.Room.Application.Services
         {
             var categories = await _repository.GetPublishedCategoriesAsync(pageNumber, pageSize);
 
-            return categories.Select(category => new PublishedCategoryDto
+            return categories.Select(category => GetCategoryToPublishedCategoryDto(culture, category)).ToList();
+        }
+
+        public async Task<PublishedCategoryDto> GetSinglePublishedCategoryByIdAsync(string culture, int id)
+        {
+            var category = await _repository.FindByIdAsync(id);
+
+            if (category == default || !category.IsPublished)
             {
-                Id = category.Id,
-                Caption = GetCategoryCaptionByCulture(culture, category),
-                ImageUrl = GetImageUrl(category.ImageName)
-            }).ToList();
+                return default;
+            }
+
+            return GetCategoryToPublishedCategoryDto(culture, category);
         }
 
         private CategoryDto GetCategoryToCategoryDto(Category category)
@@ -150,6 +157,16 @@ namespace Sushi.Room.Application.Services
                 CaptionEng = category.CaptionEng,
                 IsPublished = category.IsPublished,
                 SortIndex = category.SortIndex,
+                ImageUrl = GetImageUrl(category.ImageName)
+            };
+        }
+
+        private PublishedCategoryDto GetCategoryToPublishedCategoryDto(string culture, Category category)
+        {
+            return new PublishedCategoryDto
+            {
+                Id = category.Id,
+                Caption = GetCategoryCaptionByCulture(culture, category),
                 ImageUrl = GetImageUrl(category.ImageName)
             };
         }

@@ -9,11 +9,10 @@ namespace Sushi.Room.Domain.AggregatesModel.ProductAggregate
     {
         public Product()
         {
-
+            
         }
-        private Product(int categoryId, int userId, string title, string titleEng, string description, string descriptionEng, string imageName, decimal price)
+        private Product(int userId, string title, string titleEng, string description, string descriptionEng, string imageName, decimal price, decimal? discountPercent)
         {
-            CategoryId = categoryId;
             UserId = userId;
             Title = title;
             TitleEng = titleEng;
@@ -21,9 +20,9 @@ namespace Sushi.Room.Domain.AggregatesModel.ProductAggregate
             DescriptionEng = descriptionEng;
             ImageName = imageName;
             Price = price;
+            DiscountPercent = discountPercent;
         }
-
-        public int CategoryId { get; private set; }
+        
         public int UserId { get; private set; }
         public string Title { get; private set; }
         public string TitleEng { get; private set; }
@@ -31,15 +30,16 @@ namespace Sushi.Room.Domain.AggregatesModel.ProductAggregate
         public string DescriptionEng { get; private set; }
         public string ImageName { get; private set; }
         public decimal Price { get; private set; }
+        public decimal? DiscountPercent { get; private set; }
         public bool IsPublished { get; private set; }
 
-        public virtual Category Category { get; private set; }
         public virtual User User { get; private set; }
         public virtual ICollection<ProductPriceChangeHistory> ProductPriceChangeHistories { get; private set; }
+        public virtual ICollection<ProductCategory> ProductCategories { get; private set; }
 
-        public static Product CreateNew(int categoryId, int userId, string title, string titleEng, string description, string descriptionEng, string imageName, decimal price, bool isPublished)
+        public static Product CreateNew(int userId, string title, string titleEng, string description, string descriptionEng, string imageName, decimal price, decimal? discountPercent, bool isPublished)
         {
-            var product = new Product(categoryId, userId, title, titleEng, description, descriptionEng, imageName, price);
+            var product = new Product(userId, title, titleEng, description, descriptionEng, imageName, price, discountPercent);
 
             product.SaveProductPriceChangeHistory(userId, price);
 
@@ -55,15 +55,15 @@ namespace Sushi.Room.Domain.AggregatesModel.ProductAggregate
             return product;
         }
 
-        public void UpdateMetaData(int categoryId, int userId, string title, string titleEng, string description, string descriptionEng, decimal price)
+        public void UpdateMetaData(int userId, string title, string titleEng, string description, string descriptionEng, decimal price, decimal? discountPercent)
         {
-            CategoryId = categoryId;
             UserId = userId;
             Title = title;
             TitleEng = titleEng;
             Description = description;
             DescriptionEng = descriptionEng;
             Price = price;
+            DiscountPercent = discountPercent;
         }
 
         public void MarkAsPublished()
@@ -74,6 +74,17 @@ namespace Sushi.Room.Domain.AggregatesModel.ProductAggregate
         public void MarkAsUnpublished()
         {
             IsPublished = false;
+        }
+
+        public void SetCategories(List<ProductCategory> productCategories)
+        {
+            ProductCategories ??= new List<ProductCategory>();
+            
+            ProductCategories.Clear();
+            foreach (var productCategory in productCategories)
+            {
+                ProductCategories.Add(productCategory);
+            }
         }
 
         public void SaveProductPriceChangeHistory(int userId, decimal price)
@@ -93,6 +104,11 @@ namespace Sushi.Room.Domain.AggregatesModel.ProductAggregate
         public void SetImageName(string imageName)
         {
             ImageName = imageName;
+        }
+
+        public decimal? CalculateDiscountedPrice()
+        {
+            return Price - Price * DiscountPercent / 100;
         }
     }
 }

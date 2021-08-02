@@ -49,7 +49,6 @@ namespace Sushi.Room.Application.Services
 
             var product = Product.CreateNew
                 (
-                    categoryId: productDto.CategoryId,
                     userId: userId,
                     title: productDto.Title,
                     titleEng: productDto.TitleEng,
@@ -57,8 +56,11 @@ namespace Sushi.Room.Application.Services
                     descriptionEng: productDto.DescriptionEng,
                     imageName: imageName,
                     price: productDto.Price ?? 0,
+                    discountPercent: productDto.DiscountPercent,
                     isPublished: productDto.IsPublished
                 );
+            
+            product.SetCategories(productDto.CategoryIds.Select(categoryId => new ProductCategory(categoryId)).ToList());
 
             await _repository.AddAsync(product);
             await _repository.SaveChangesAsync();
@@ -90,13 +92,13 @@ namespace Sushi.Room.Application.Services
 
             product.UpdateMetaData
             (
-                categoryId: productDto.CategoryId,
                 userId: userId,
                 title: productDto.Title,
                 titleEng: productDto.TitleEng,
                 description: productDto.Description,
                 descriptionEng: productDto.DescriptionEng,
-                price: productDto.Price ?? 0
+                price: productDto.Price ?? 0,
+                discountPercent: productDto.DiscountPercent
             );
 
             if (productDto.IsPublished)
@@ -107,6 +109,8 @@ namespace Sushi.Room.Application.Services
             {
                 product.MarkAsUnpublished();
             }
+            
+            product.SetCategories(productDto.CategoryIds.Select(categoryId => new ProductCategory(categoryId)).ToList());
 
             _repository.Update(product);
 
@@ -133,14 +137,19 @@ namespace Sushi.Room.Application.Services
         {
             var products = await _repository.GetPublishedProductsByCategoryAsync(categoryId, pageNumber, pageSize);
 
-            return products.Select(product => new PublishedProductDto
+            return products.Select(product => GetPublishedProductDtoFromProduct(culture, product)).ToList();
+        }
+
+        public async Task<PublishedProductDto> GetPublishedProductDetailsAsync(string culture, int id)
+        {
+            var product = await _repository.FindByIdAsync(id);
+
+            if (product == default)
             {
-                Id = product.Id,
-                Title = GetProductTitleByCulture(culture, product),
-                Description = GetProductDescriptionByCulture(culture, product),
-                ImageUrl = GetImageUrl(product.ImageName),
-                Price = product.Price
-            }).ToList();
+                return default;
+            }
+
+            return GetPublishedProductDtoFromProduct(culture, product);
         }
 
         private ProductDto GetProductDtoFromProduct(Product product)
@@ -148,13 +157,14 @@ namespace Sushi.Room.Application.Services
             return new ProductDto
             {
                 Id = product.Id,
-                CategoryCaption = product.Category.Caption,
-                CategoryId = product.CategoryId,
+                CategoryIds = product.ProductCategories.Select(p => p.CategoryId).ToList(),
                 Title = product.Title,
                 TitleEng = product.TitleEng,
                 Description = product.Description,
                 DescriptionEng = product.DescriptionEng,
                 Price = product.Price,
+                DiscountPercent = product.DiscountPercent,
+                DiscountedPrice = product.CalculateDiscountedPrice(),
                 IsPublished = product.IsPublished,
                 ImageUrl = string.IsNullOrEmpty(product.ImageName)
                     ? default
@@ -162,6 +172,19 @@ namespace Sushi.Room.Application.Services
             };
         }
 
+        private PublishedProductDto GetPublishedProductDtoFromProduct(string culture, Product product)
+        {
+            return new PublishedProductDto
+            {
+                Id = product.Id,
+                Title = GetProductTitleByCulture(culture, product),
+                Description = GetProductDescriptionByCulture(culture, product),
+                ImageUrl = GetImageUrl(product.ImageName),
+                Price = product.Price,
+                DiscountPercent = product.DiscountPercent,
+                DiscountedPrice = product.CalculateDiscountedPrice()
+            };
+        }
         private string GetProductTitleByCulture(string culture, Product product)
         {
             return culture switch

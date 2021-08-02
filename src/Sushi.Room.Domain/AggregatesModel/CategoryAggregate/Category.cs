@@ -23,7 +23,7 @@ namespace Sushi.Room.Domain.AggregatesModel.CategoryAggregate
         public bool IsPublished { get; private set; }
         public int SortIndex { get; private set; }
 
-        public virtual ICollection<Product> Products { get; private set; }
+        public virtual ICollection<ProductCategory> ProductCategories { get; private set; }
 
         public static Category CreateNew(string caption, string captionEng, string imageName, bool isPublished)
         {

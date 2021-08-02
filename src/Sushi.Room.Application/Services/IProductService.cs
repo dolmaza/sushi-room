@@ -17,5 +17,7 @@ namespace Sushi.Room.Application.Services
         Task DeleteProductAsync(int id);
 
         Task<List<PublishedProductDto>> GetPublishedProductsByCategoryAsync(string culture, int categoryId, int pageNumber, int pageSize);
+
+        Task<PublishedProductDto> GetPublishedProductDetailsAsync(string culture, int id);
     }
 }

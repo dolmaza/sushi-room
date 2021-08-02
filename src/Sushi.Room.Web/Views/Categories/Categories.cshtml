@@ -1,9 +1,28 @@
 ﻿@model PublishedCategoryViewModel
-
-@foreach (var category in Model.Categories)
+@section Styles
 {
-    <img src="@category.ImageUrl" alt="Image" width="50" height="50" />
-    <p>
-        <a href="@Url.RouteUrl(RouteNames.WebProducts.Products, new { culture = Model.Culture, categoryId = category.Id})">@category.Caption</a>
-    </p>
+    <link rel="stylesheet" href="~/css/Categories/Categories.css">
 }
+@section Breadcrambs
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">@localizer["Categories_Breadcrambs_Home"]</li>
+    </ol>
+}
+<div class="container">
+    <div class="row">
+        @foreach (var category in Model.Categories)
+        {
+            <div class="col-md-6">
+                <div class="category-box">
+                    <a href="@Url.RouteUrl(RouteNames.WebProducts.Products, new {culture = Model.Culture, categoryId = category.Id})">
+                        <img class="category-image" src="@category.ImageUrl" alt="Image">
+                        <div class="content">
+                            <h5 class="category-title">@category.Caption</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
+     </div>
+</div>

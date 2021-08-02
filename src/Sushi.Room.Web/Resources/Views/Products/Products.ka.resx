@@ -98,4 +98,10 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
+	<data name="Products_Breadcrambs_Home" xml:space="preserve">
+		<value>მთავარი</value>
+	</data>
+	<data name="Products_Add_Cart_Text" xml:space="preserve">
+		<value>კალათაში დამატება</value>
+	</data>
 </root>

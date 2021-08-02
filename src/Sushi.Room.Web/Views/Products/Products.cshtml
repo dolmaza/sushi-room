@@ -1,11 +1,51 @@
 ﻿@model PublishedProductViewModel
-
-@foreach (var product in Model.Products)
+@section Styles
 {
-    <img src="@product.ImageUrl" alt="Image" width="50" height="50" />
-    <p>
-        <a href="@Url.RouteUrl(RouteNames.WebProducts.ProductDetails, new { culture = Model.Culture, categoryId = Model.CategoryId, productId = product.Id})">@product.Title</a>
-    </p>
-    <p>@product.Price ₾</p>
-    <p>@Html.Raw(product.Description)</p>
+    <link rel="stylesheet" href="~/css/Products/Products.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 }
+
+@section Breadcrambs
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="@Url.RouteUrl(RouteNames.WebCategories.Categories, new {culture = Model.Culture})">@localizer["Products_Breadcrambs_Home"]</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Model.CategoryCaption</li>
+    </ol>
+}
+<div class="container">
+    <div class="row">
+        @foreach (var product in Model.Products)
+        {
+            <div class="col-lg-4 col-md-6">
+                <div class="product-card">
+                    @if (product.HasDiscount)
+                    {
+                        <div class="badge">-@product.DiscountPercent %</div>
+                    }
+                    <a class="product-navigation" href="@Url.RouteUrl(RouteNames.WebProducts.ProductDetails, new {culture = Model.Culture, categoryId = Model.CategoryId, productId = product.Id})">
+                        <div class="product-img">
+                            <img src="@product.ImageUrl" alt="Image">
+                        </div>
+                        <div class="product-details">
+                            <h6 class="product-title">@product.Title</h6>
+                            <div class="product-bottom-details">
+                                <div class="product-price">
+                                    @if (product.HasDiscount)
+                                    {
+                                        <span>@product.DiscountedPrice ₾</span>
+                                        <small>@product.Price ₾</small>
+                                    }
+                                    else
+                                    {
+                                        <span>@product.Price ₾</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <button class="add-cart">@localizer["Products_Add_Cart_Text"]</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -3,6 +3,7 @@ using Sushi.Room.Domain.AggregatesModel.ProductAggregate;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Sushi.Room.Domain.AggregatesModel.CategoryAggregate;
 
 namespace Sushi.Room.Infrastructure.Repositories
 {
@@ -14,15 +15,17 @@ namespace Sushi.Room.Infrastructure.Repositories
 
         public async Task<(List<Product>, int)> GetProductsAsync(string searchValue, int pageNumber, int pageSize)
         {
-            var query = Query()
-                .Where(p => string.IsNullOrEmpty(searchValue)
-                            || p.Title.Contains(searchValue)
-                            || p.TitleEng.Contains(searchValue)
-                            || p.Description.Contains(searchValue)
-                            || p.DescriptionEng.Contains(searchValue)
-                            || p.Category.Caption.Contains(searchValue)
-                            || p.Category.CaptionEng.Contains(searchValue))
-                .OrderByDescending(ob => ob.DateOfCreate);
+            var query = from product in Query()
+                join productCategory in Context.Set<ProductCategory>() on product.Id equals productCategory.ProductId
+                join category in Context.Set<Category>() on productCategory.CategoryId equals category.Id 
+                orderby product.DateOfCreate descending
+                where string.IsNullOrEmpty(searchValue) || product.Title.Contains(searchValue)
+                                                        || product.TitleEng.Contains(searchValue)
+                                                        || product.Description.Contains(searchValue)
+                                                        || product.DescriptionEng.Contains(searchValue)
+                                                        || category.Caption.Contains(searchValue)
+                                                        || category.CaptionEng.Contains(searchValue)
+                select product;
 
             var count = query.Count();
 
@@ -36,13 +39,17 @@ namespace Sushi.Room.Infrastructure.Repositories
 
         public async Task<List<Product>> GetPublishedProductsByCategoryAsync(int categoryId, int pageNumber, int pageSize)
         {
-            return await Query()
-                 .Where(p => p.CategoryId == categoryId)
-                 .Where(p => p.IsPublished)
-                 .Skip((pageNumber - 1) * pageSize)
-                 .Take(pageSize)
-                 .OrderByDescending(ob => ob.DateOfCreate)
-                 .ToListAsync();
+            var query = from product in Query()
+                join productCategory in Context.Set<ProductCategory>() on product.Id equals productCategory.ProductId
+                join category in Context.Set<Category>() on productCategory.CategoryId equals category.Id 
+                orderby productCategory.SortIndex, product.DateOfCreate descending 
+                where product.IsPublished && category.Id == categoryId
+                select product;
+            
+            return await query
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
         }
     }
 }

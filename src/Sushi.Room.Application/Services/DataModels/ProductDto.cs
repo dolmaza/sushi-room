@@ -8,8 +8,7 @@ namespace Sushi.Room.Application.Services.DataModels
         public int Id { get; set; }
         
         [Display(Name = "კატეგორია")]
-        public int CategoryId { get; set; }
-        public string CategoryCaption { get; set; }
+        public List<int> CategoryIds { get; set; }
         
         public int UserId { get; set; }
         
@@ -28,6 +27,12 @@ namespace Sushi.Room.Application.Services.DataModels
         [Display(Name = "ფასი")]
         public decimal? Price { get; set; }
         
+        [Display(Name = "ფასდაკლების %")]
+        public decimal? DiscountPercent { get; set; }
+
+        [Display(Name = "ფასდაკლებული ფასი")]
+        public decimal? DiscountedPrice { get; set; }
+        
         [Display(Name = "გამოქვეყნებულია?")]
         public bool IsPublished { get; set; }
         
@@ -38,5 +43,10 @@ namespace Sushi.Room.Application.Services.DataModels
         public string ImageBase64 { get; set; }
 
         public List<KeyValuePair<int, string>> Categories { get; set; }
+
+        public ProductDto()
+        {
+            CategoryIds = new List<int>();
+        }
     }
 }

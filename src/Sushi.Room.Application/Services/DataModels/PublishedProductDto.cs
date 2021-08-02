@@ -7,6 +7,9 @@
         public string Description { get; set; }
         public string ImageUrl { get; set; }
         public decimal Price { get; set; }
+        public decimal? DiscountPercent { get; set; }
+        public decimal? DiscountedPrice { get; set; }
+        public bool HasDiscount => DiscountPercent.HasValue;
 
     }
 }

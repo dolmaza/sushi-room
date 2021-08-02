@@ -7,6 +7,7 @@ namespace Sushi.Room.Web.Models.Products
     {
         public string Culture { get; set; }
         public int CategoryId { get; set; }
+        public string CategoryCaption { get; set; }
         public List<PublishedProductDto> Products { get; set; }
     }
 }

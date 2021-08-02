@@ -19,7 +19,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="TitleEng"></label>
-                        <input type="text" class="form-control" asp-for="TitleEng">
+                        <input type="text" class="form-control" asp-for="TitleEng" value="@Model.TitleEng">
                         <span class="text-danger" asp-validation-for="TitleEng"></span>
                     </div>
                 </div>
@@ -34,11 +34,26 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label asp-for="CategoryId"></label>
-                        <select class="form-control" asp-for="CategoryId" asp-items="Model.Categories.Select(item => new SelectListItem(item.Value, item.Key.ToString(), Model.CategoryId == item.Key))">
-                            <option value="">აირჩიე კატეგორია...</option>
+                        <label asp-for="CategoryIds"></label>
+                        <select multiple class="form-control" asp-for="CategoryIds" asp-items="Model.Categories.Select(item => new SelectListItem(item.Value, item.Key.ToString(), Model.CategoryIds.Contains(item.Key)))">
                         </select>
-                        <span class="text-danger" asp-validation-for="CategoryId"></span>
+                        <span class="text-danger" asp-validation-for="CategoryIds"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="DiscountPercent"></label>
+                        <input type="text" class="form-control" asp-for="DiscountPercent" value="@Model.DiscountPercent">
+                        <span class="text-danger" asp-validation-for="DiscountPercent"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="DiscountedPrice"></label>
+                        <input type="text" disabled class="form-control" asp-for="DiscountedPrice" value="@Model.DiscountedPrice">
+                        <span class="text-danger" asp-validation-for="DiscountedPrice"></span>
                     </div>
                 </div>
             </div>

@@ -118,7 +118,7 @@ namespace Sushi.Room.Web.Areas.Admin.Controllers
 
                 return View(new ProductEditorModel { Product = product });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 InitErrorMessage();
 
