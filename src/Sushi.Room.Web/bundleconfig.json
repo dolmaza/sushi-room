@@ -21,8 +21,7 @@
   {
     "outputFileName": "wwwroot/admin/scripts/plugins.min.js",
     "inputFiles": [
-      "wwwroot/plugins/jquery/jquery.min.js",
-      "wwwroot/plugins/jquery-ui/jquery-ui.min.js",
+      "wwwroot/plugins/jquery/jquery-1.9.1.js",
 
       "wwwroot/plugins/jquery/jquery.unobtrusive-ajax.min.js",
       "wwwroot/plugins/jquery/jquery.validate.min.js",
@@ -52,6 +51,17 @@
     "outputFileName": "wwwroot/admin/scripts/custom.min.js",
     "inputFiles": [
       "wwwroot/admin/scripts/globals.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/plugins/jquery-ui/jquery-ui.min.js",
+    "inputFiles": [
+      "wwwroot/plugins/jquery-ui/jquery-ui.js"
     ],
     "minify": {
       "enabled": true,

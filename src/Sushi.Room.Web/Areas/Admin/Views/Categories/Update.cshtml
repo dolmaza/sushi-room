@@ -17,9 +17,24 @@
     </div>
 }
 
-<form asp-controller="Categories" asp-action="Update" method="post">
-    <partial name="_CategoryEditorModel.cshtml" model="Model.Category" />
-</form>
+<div class="tabbable-custom ">
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a> რედაქტირება </a>
+        </li>
+        <li>
+            <a href="@Url.RouteUrl(RouteNames.Admin.Category.CategoryProducts, new {id = Model.Category.Id})"> პროდუქტები </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active">
+            <form asp-controller="Categories" asp-action="Update" method="post">
+                <partial name="_CategoryEditorModel.cshtml" model="Model.Category" />
+            </form>
+        </div>
+    </div>
+</div>
+
 
 
 @section Scripts

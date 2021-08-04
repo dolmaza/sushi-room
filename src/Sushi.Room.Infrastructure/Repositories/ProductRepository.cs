@@ -15,7 +15,7 @@ namespace Sushi.Room.Infrastructure.Repositories
 
         public async Task<(List<Product>, int)> GetProductsAsync(string searchValue, int pageNumber, int pageSize)
         {
-            var query = from product in Query()
+            var query = (from product in Query()
                 join productCategory in Context.Set<ProductCategory>() on product.Id equals productCategory.ProductId
                 join category in Context.Set<Category>() on productCategory.CategoryId equals category.Id 
                 orderby product.DateOfCreate descending
@@ -25,7 +25,7 @@ namespace Sushi.Room.Infrastructure.Repositories
                                                         || product.DescriptionEng.Contains(searchValue)
                                                         || category.Caption.Contains(searchValue)
                                                         || category.CaptionEng.Contains(searchValue)
-                select product;
+                select product).Distinct();
 
             var count = query.Count();
 
@@ -37,6 +37,15 @@ namespace Sushi.Room.Infrastructure.Repositories
             return (products, count);
         }
 
+        public async Task<List<Product>> GetProductsByCategoryAsync(int categoryId)
+        {
+            return await (from product in Query()
+                join productCategory in Context.Set<ProductCategory>() on product.Id equals productCategory.ProductId
+                orderby productCategory.SortIndex, product.DateOfCreate descending
+                where productCategory.CategoryId == categoryId
+                select product).ToListAsync();
+        }
+        
         public async Task<List<Product>> GetPublishedProductsByCategoryAsync(int categoryId, int pageNumber, int pageSize)
         {
             var query = from product in Query()
@@ -49,6 +58,15 @@ namespace Sushi.Room.Infrastructure.Repositories
             return await query
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
+                .ToListAsync();
+        }
+
+        public async Task<List<Product>> GetPublishedProductsByIdsAsync(List<int> ids)
+        {
+            return await Query()
+                .Where(p => p.IsPublished)
+                .Where(p => ids.Contains(p.Id))
+                .OrderByDescending(ob => ob.DateOfCreate)
                 .ToListAsync();
         }
     }

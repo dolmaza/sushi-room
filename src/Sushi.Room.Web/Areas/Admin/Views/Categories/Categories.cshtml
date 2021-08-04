@@ -24,42 +24,47 @@
         <div class="card-body">
             <table id="categories-table" class="table table-bordered table-responsive table-hover" data-sync-sort-indexes-url="@Url.RouteUrl(RouteNames.Admin.Category.SyncSortIndexes)">
                 <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th width="70">სურათი</th>
-                        <th>დასახელება</th>
-                        <th>დასახელება ინგ.</th>
-                        <th>გამოქვეყნებულია?</th>
-                        <th></th>
-                    </tr>
+                <tr>
+                    <th>Id</th>
+                    <th width="70">სურათი</th>
+                    <th>დასახელება</th>
+                    <th>დასახელება ინგ.</th>
+                    <th>გამოქვეყნებულია?</th>
+                    <th></th>
+                </tr>
                 </thead>
                 <tbody id="categories-table-body">
-                    @foreach (var item in Model.Categories)
-                    {
-                        <tr data-id="@item.Id">
-                            <td>@item.Id</td>
-                            <td width="70">
-                                @if (!string.IsNullOrEmpty(item.ImageUrl))
-                                {
-                                    <img src="@item.ImageUrl" class="img-thumbnail" alt="Image" height="50" width="50">
-                                }
-                            </td>
-                            <td>@item.Caption</td>
-                            <td>@item.CaptionEng</td>
-                            <td class="text-center">
-                                <label class="mt-checkbox mt-checkbox-outline">
-                                    <input type="checkbox" @(item.IsPublished ? Html.Raw("checked") : null)>
-                                    <span></span>
-                                </label>
-                            </td>
-                            <td>
-                                <a href="@Url.RouteUrl(RouteNames.Admin.Category.Update, new {id = item.Id})" class="btn btn-xs btn-primary"> <i class="fa fa-pencil"></i></a>
-                                <button class="btn btn-xs btn-danger delete-btn" data-url="@Url.RouteUrl(RouteNames.Admin.Category.Delete, new {id = item.Id})">
-                                    <i class="fa fa-trash-o"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    }
+                @foreach (var item in Model.Categories)
+                {
+                    <tr data-id="@item.Id">
+                        <td>@item.Id</td>
+                        <td width="70">
+                            @if (!string.IsNullOrEmpty(item.ImageUrl))
+                            {
+                                <img src="@item.ImageUrl" class="img-thumbnail" alt="Image" height="50" width="50">
+                            }
+                        </td>
+                        <td>@item.Caption</td>
+                        <td>@item.CaptionEng</td>
+                        <td class="text-center">
+                            <label class="mt-checkbox mt-checkbox-outline">
+                                <input type="checkbox" @(item.IsPublished ? Html.Raw("checked") : null)>
+                                <span></span>
+                            </label>
+                        </td>
+                        <td>
+                            <a href="@Url.RouteUrl(RouteNames.Admin.Category.Update, new {id = item.Id})" class="btn btn-xs btn-primary">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                            <button class="btn btn-xs btn-danger delete-btn" data-url="@Url.RouteUrl(RouteNames.Admin.Category.Delete, new {id = item.Id})">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                            <a href="@Url.RouteUrl(RouteNames.Admin.Category.CategoryProducts, new {id = item.Id})" class="btn btn-xs btn-primary">
+                                <i class="fa fa-th-list"></i> პროდუქტები
+                            </a>
+                        </td>
+                    </tr>
+                }
 
 
                 </tbody>
@@ -70,6 +75,7 @@
 
 @section Scripts
 {
+    <script src="~/plugins/jquery-ui/jquery-ui.min.js"></script>
     <script src="~/admin/scripts/Categories/CategoryViewModel.js"></script>
     <script>
         $(function () {

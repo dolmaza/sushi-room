@@ -1,0 +1,76 @@
+@model CategoryProductViewModel
+@{
+    ViewData["Title"] = $"კატეგორა '{Model.CategoryCaption}'-ის პროდუქტები";
+}
+@section Breadcrumbs
+{
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <a href="@Url.RouteUrl(RouteNames.Admin.Category.Categories)">კატეგორიები</a>
+                <i class="fa fa-circle"></i>
+            </li>
+            <li>
+                <span>@ViewData["Title"]</span>
+            </li>
+        </ul>
+    </div>
+}
+<div class="tabbable-custom ">
+    <ul class="nav nav-tabs">
+        <li>
+            <a href="@Url.RouteUrl(RouteNames.Admin.Category.Update, new {id = Model.CategoryId})"> რედაქტირება </a>
+        </li>
+        <li class="active">
+            <a> პროდუქტები </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active">
+            <table id="products-table" class="table table-bordered table-responsive table-hover" data-sync-sort-indexes-url="@Url.RouteUrl(RouteNames.Admin.Product.SyncSortIndexes, new {categoryId = Model.CategoryId})">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th width="70">სურათი</th>
+                    <th>სათაური</th>
+                    <th>ფასი</th>
+                    <th>გამოქვეყნებულია?</th>
+                </tr>
+                </thead>
+                <tbody id="products-table-body">
+                @foreach (var item in Model.Products)
+                {
+                    <tr data-id="@item.Id">
+                        <td>@item.Id</td>
+                        <td width="70">
+                            @if (!string.IsNullOrEmpty(item.ImageUrl))
+                            {
+                                <img src="@item.ImageUrl" class="img-thumbnail" alt="Image" height="50" width="50">
+                            }
+                        </td>
+                        <td>@item.Title</td>
+                        <td>@item.Price</td>
+                        <td class="text-center">
+                            <label class="mt-checkbox mt-checkbox-outline">
+                                <input type="checkbox" @(item.IsPublished ? Html.Raw("checked") : null)>
+                                <span></span>
+                            </label>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/admin/scripts/Categories/CategoryProductsViewModel.js"></script>
+    <script>
+        $(function (){
+            CategoryProductsViewModel.init();
+        });
+    </script>
+}

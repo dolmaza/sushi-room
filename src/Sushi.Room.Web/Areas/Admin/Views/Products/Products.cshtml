@@ -29,7 +29,7 @@
     <div class="portlet-body">
         <div class="card-body">
             <div class="pull-right search search-container"><input class="form-control" id="search-input" type="text" placeholder="ძებნა..." value="@Model.SearchValue"></div>
-            <table id="categories-table" class="table table-bordered table-responsive table-hover">
+            <table id="products-table" class="table table-bordered table-responsive table-hover">
                 <thead>
                 <tr>
                     <th>Id</th>
@@ -40,7 +40,7 @@
                     <th></th>
                 </tr>
                 </thead>
-                <tbody id="categories-table-body">
+                <tbody id="products-table-body">
                 @foreach (var item in Model.Products)
                 {
                     <tr data-id="@item.Id">

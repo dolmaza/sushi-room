@@ -7,19 +7,22 @@ using Sushi.Room.Domain.Exceptions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Sushi.Room.Domain.AggregatesModel.CategoryAggregate;
 
 namespace Sushi.Room.Application.Services
 {
     public class ProductService : IProductService
     {
         private readonly IProductRepository _repository;
+        private readonly ICategoryRepository _categoryRepository;
         private readonly AppSettings _appSettings;
         private readonly IUploadService _uploadService;
 
-        public ProductService(IProductRepository repository, IOptions<AppSettings> appSettings, IUploadService uploadService)
+        public ProductService(IProductRepository repository, IOptions<AppSettings> appSettings, IUploadService uploadService, ICategoryRepository categoryRepository)
         {
             _repository = repository;
             _uploadService = uploadService;
+            _categoryRepository = categoryRepository;
             _appSettings = appSettings.Value;
         }
 
@@ -30,6 +33,12 @@ namespace Sushi.Room.Application.Services
             return (products.Select(GetProductDtoFromProduct).ToList(), count);
         }
 
+        public async Task<List<ProductDto>> GetProductsByCategoryAsync(int categoryId)
+        {
+            var products = await _repository.GetProductsByCategoryAsync(categoryId);
+
+            return products.Select(GetProductDtoFromProduct).ToList();
+        }
         public async Task<ProductDto> GetSingleProductByIdAsync(int id)
         {
             var product = await _repository.FindByIdAsync(id);
@@ -152,6 +161,42 @@ namespace Sushi.Room.Application.Services
             return GetPublishedProductDtoFromProduct(culture, product);
         }
 
+        public async Task<List<PublishedProductDto>> GetPublishedProductsByIdsAsync(string culture, List<int> ids)
+        {
+            var products = await _repository.GetPublishedProductsByIdsAsync(ids);
+
+            return products.Select(product => GetPublishedProductDtoFromProduct(culture, product)).ToList();
+        }
+
+        public async Task SyncSortIndexesAsync(int categoryId, List<KeyValuePair<int, int>> sortIndexes)
+        {
+            var category = await _categoryRepository.FindByIdAsync(categoryId);
+
+            if (category == default)
+            {
+                throw new SushiRoomDomainException("კატეგორია ვერ მოიძებნა!");
+            }
+            
+            var productCategoriesDict = category.ProductCategories.ToDictionary(key => key.ProductId, value => value);
+
+            if (productCategoriesDict.Count > 0)
+            {
+                foreach (var sortIndexItem in sortIndexes)
+                {
+                    if (productCategoriesDict.ContainsKey(sortIndexItem.Key))
+                    {
+                        var productCategory = productCategoriesDict[sortIndexItem.Key];
+
+                        productCategory.UpdateMetaData(sortIndexItem.Value);
+                    }
+                }
+
+                _categoryRepository.Update(category);
+                await _categoryRepository.SaveChangesAsync();
+            }
+        }
+
+        
         private ProductDto GetProductDtoFromProduct(Product product)
         {
             return new ProductDto
@@ -185,6 +230,7 @@ namespace Sushi.Room.Application.Services
                 DiscountedPrice = product.CalculateDiscountedPrice()
             };
         }
+        
         private string GetProductTitleByCulture(string culture, Product product)
         {
             return culture switch

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Sushi.Room.Web.Areas.Admin.Models.Categories
+namespace Sushi.Room.Web.Areas.Admin.Models
 {
     public class SyncSortIndexesEditorModel
     {

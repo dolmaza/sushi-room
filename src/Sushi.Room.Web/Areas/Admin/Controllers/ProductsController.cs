@@ -6,6 +6,7 @@ using Sushi.Room.Web.Areas.Admin.Models.Products;
 using Sushi.Room.Web.Infrastructure;
 using System;
 using System.Threading.Tasks;
+using Sushi.Room.Web.Areas.Admin.Models;
 
 namespace Sushi.Room.Web.Areas.Admin.Controllers
 {
@@ -118,7 +119,7 @@ namespace Sushi.Room.Web.Areas.Admin.Controllers
 
                 return View(new ProductEditorModel { Product = product });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 InitErrorMessage();
 
@@ -137,6 +138,26 @@ namespace Sushi.Room.Web.Areas.Admin.Controllers
                 await _productService.DeleteProductAsync(id);
 
                 return Ok(new { message = "პროდუქტი წარამტებით წაიშალა!" });
+            }
+            catch (SushiRoomDomainException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception)
+            {
+                return BadRequest(new { message = _defaultErrorMessage });
+            }
+        }
+        
+        [HttpPost]
+        [Route("products/{categoryId}/sync-sort-indexes", Name = RouteNames.Admin.Product.SyncSortIndexes)]
+        public async Task<IActionResult> SyncSortIndexes(int categoryId, SyncSortIndexesEditorModel model)
+        {
+            try
+            {
+                await _productService.SyncSortIndexesAsync(categoryId, model.SortIndexes);
+
+                return Ok();
             }
             catch (SushiRoomDomainException ex)
             {

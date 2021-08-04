@@ -81,6 +81,7 @@ namespace Sushi.Room.Domain.AggregatesModel.ProductAggregate
             ProductCategories ??= new List<ProductCategory>();
             
             ProductCategories.Clear();
+            
             foreach (var productCategory in productCategories)
             {
                 ProductCategories.Add(productCategory);

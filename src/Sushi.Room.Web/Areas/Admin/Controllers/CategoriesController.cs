@@ -6,16 +6,19 @@ using Sushi.Room.Web.Areas.Admin.Models.Categories;
 using Sushi.Room.Web.Infrastructure;
 using System;
 using System.Threading.Tasks;
+using Sushi.Room.Web.Areas.Admin.Models;
 
 namespace Sushi.Room.Web.Areas.Admin.Controllers
 {
     public class CategoriesController : AdminBaseController
     {
         private readonly ICategoryService _categoryService;
+        private readonly IProductService _productService;
 
-        public CategoriesController(ICategoryService categoryService)
+        public CategoriesController(ICategoryService categoryService, IProductService productService)
         {
             _categoryService = categoryService;
+            _productService = productService;
         }
 
         [HttpGet]
@@ -27,6 +30,27 @@ namespace Sushi.Room.Web.Areas.Admin.Controllers
             return View(new CategoryViewModel
             {
                 Categories = categories
+            });
+        }
+
+        [HttpGet]
+        [Route("categories/{id}/products", Name = RouteNames.Admin.Category.CategoryProducts)]
+        public async Task<IActionResult> CategoryProducts(int id)
+        {
+            var categoryDto = await _categoryService.GetSingleCategoryByIdAsync(id);
+            
+            if (categoryDto == default)
+            {
+                return NotFound();
+            }
+            
+            var products = await _productService.GetProductsByCategoryAsync(id);
+            
+            return View(new  CategoryProductViewModel
+            {
+                CategoryId = id,
+                CategoryCaption = categoryDto.Caption,
+                Products = products
             });
         }
 

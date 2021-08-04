@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Sushi.Room.Application.Services;
 using Sushi.Room.Web.Infrastructure;
 using Sushi.Room.Web.Models.Products;
 using System.Threading.Tasks;
-using Sushi.Room.Application.Services.DataModels;
 
 namespace Sushi.Room.Web.Controllers
 {
@@ -65,6 +62,18 @@ namespace Sushi.Room.Web.Controllers
                 CategoryId = category.Id,
                 CategoryCaption = category.Caption,
                 Product = product
+            });
+        }
+
+        [HttpPost]
+        [Route("{culture}/products-by-ids", Name = RouteNames.WebProducts.ProductsByIds)]
+        public async Task<IActionResult> GetPublishedProductsByIdsAsync(string culture, GetPublishedProductsByIdsModel request)
+        {
+            var products = await _productService.GetPublishedProductsByIdsAsync(culture, request.ProductIds);
+            
+            return Ok(new
+            {
+                Data = products
             });
         }
     }

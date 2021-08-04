@@ -8,6 +8,10 @@ namespace Sushi.Room.Domain.AggregatesModel.ProductAggregate
     {
         Task<(List<Product>, int)> GetProductsAsync(string searchValue, int pageNumber, int pageSize);
 
+        Task<List<Product>> GetProductsByCategoryAsync(int categoryId);
+        
         Task<List<Product>> GetPublishedProductsByCategoryAsync(int categoryId, int pageNumber, int pageSize);
+
+        Task<List<Product>> GetPublishedProductsByIdsAsync(List<int> ids);
     }
 }

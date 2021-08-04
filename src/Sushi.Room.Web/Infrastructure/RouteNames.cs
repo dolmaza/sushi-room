@@ -26,6 +26,7 @@
             public struct Category
             {
                 public const string Categories = "CategoriesPage";
+                public const string CategoryProducts = "CategoryProductsPage";
                 public const string Update = "CategoriesUpdate";
                 public const string Create = "CategoriesCreate";
                 public const string Delete = "CategoriesDelete";
@@ -38,6 +39,7 @@
                 public const string Update = "ProductsUpdate";
                 public const string Create = "ProductsCreate";
                 public const string Delete = "ProductsDelete";
+                public const string SyncSortIndexes = "ProductsSyncSortIndexes";
             }
         }
 
@@ -50,6 +52,7 @@
         {
             public const string Products = "WebProductsPage";
             public const string ProductDetails = "WebProductDetails";
+            public const string ProductsByIds = "WebProductsByIds";
         }
     }
 }
