@@ -6,11 +6,7 @@
 * Chronicle Display Roman font was substituted for similar fonts from Google Fonts.
 */
 
-body {
-    background-color: #fdf1ec;
-}
-
-.wrapper {
+.content-wrapper {
     height: 420px;
     width: 100%;
     margin: 50px auto;
@@ -19,49 +15,76 @@ body {
     -webkit-box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
     -moz-box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
     box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+    overflow:hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: black;
 }
 
-.product-img {
+.content-wrapper .product-img {
     float: left;
-    height: 420px;
-    width: 40%;
-    
+    max-width: 300px;
+    height: auto;
+    position: relative;
+    overflow: hidden;
+
+    margin:20px;
 }
 
-.product-img img {
+.content-wrapper .product-img img {
     border-radius: 7px 0 0 7px;
     width: 100%;
+    height: auto;
+    display: block;
+    position: relative;
+    z-index: 1;
 }
 
-.product-info {
-    float: left;
-    height: 420px;
-    width: 60%;
-    border-radius: 0 7px 10px 7px;
-    background-color: #ffffff;
+.content-wrapper .img-gradient{
+    position: absolute;
+    width: 10px;
+    top: 0;
+    bottom: 0;
+    right: -5px;
+    background: black;
+    z-index: 2;
+    filter: blur(3px);
+    -webkit-filter: blur(3px);
 }
 
-.product-text {
-    height: 300px;
+.content-wrapper .product-info {
+    background-color: black;
+    display: flex;
+    flex-direction:column;
+    height: 100%;
+    padding-right: 30px;
+    flex: 1;
+}
+
+.content-wrapper .product-text {
     width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    color: white;
 }
 
-.product-text h1 {
-  
-    padding: 30px 0 0 35px;
+.content-wrapper .product-text h1 {
+    margin: 30px 0 7px 0;
     font-size: 34px;
-    color: #474747;
-    width: 100%;
+    color: white;
+    padding-bottom: 10px;
+    border-bottom: 1px solid white;
     
 }
 
-.product-text h1,
-.product-price-btn p {
+.content-wrapper .product-text h1,
+.content-wrapper .product-price-btn p {
     font-family: 'Bentham', serif;
 }
 
-.product-text h2 {
-    padding: 0 0 0 36px;
+.content-wrapper .product-text h2 {
     font-size: 13px;
     font-family: 'Raleway', sans-serif;
     font-weight: 400;
@@ -71,33 +94,55 @@ body {
     
 }
 
-.product-text .product-price {
-    
-    padding: 0 0 0 36px;
-    font-family: 'Playfair Display', serif;
-    color: #8d8d8d;
-    line-height: 1.7em;
-    font-size: 28px;
-    font-weight: lighter;
-    overflow: hidden;
-    
-    
- 
+.content-wrapper .badge{
+    position:absolute;
+    left:20px;
+    top:20px;
+    padding:3px 10px;
+    text-transform:uppercase;
+    background:red;
+    color:#FFFFFF;
+    z-index: 2;
 }
 
-.product-price-btn {
-    height: 103px;
-    width: 327px;
-    margin-top: 17px;
-    position: relative;
+
+.content-wrapper .product-price{
+    font-size: 18px;
+    /*color: #F20500;*/
+    color: white;
+    font-weight: 600;
 }
-.product-text .product-description{
+
+.content-wrapper .product-price small{
+    font-size: 80%;
+    font-weight: 400;
+    margin-left: 5px;
+    text-decoration: line-through;
+}
+
+
+.content-wrapper .product-price-btn {
+    flex: initial;
+    margin: 20px 0;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.content-wrapper .product-text > div{
+    flex: initial;
+}
+
+.content-wrapper .product-text .product-description{
     width: 100%;
     height: 100px;
-    border: 1px solid red;
+    flex: 1 !important;
+    overflow-y: auto;
 }
 
-.product-price-btn p {
+
+.content-wrapper .product-price-btn p {
     display: inline-block;
     position: absolute;
     top: 0px;
@@ -109,34 +154,60 @@ body {
     color: #474747;
 }
 
-span {
-    display: inline-block;
-    height: 50px;
-    font-family: 'Suranna', serif;
-    
-}
 
 
-.product-price-btn button {
-    float: right;
-    display: inline-block;
-    height: 50px;
-    width: 176px;
-    margin: 0 40px 0 16px;
-    box-sizing: border-box;
-    border: transparent;
-    border-radius: 60px;
-    font-family: 'Raleway', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: #ffffff;
-    background-color: #9cebd5;
+
+.content-wrapper .product-price-btn button {
+    width:50%;
+    border: none;
     cursor: pointer;
-    outline: none;
+    background: none;
+    transition: 0.5s;
+    font-size: 16px;
+    padding:10px;
+    text-transform: uppercase;
+    background: #F20500;
+    color:whitesmoke;
+    outline: 0 !important;
 }
 
-.product-price-btn button:hover {
-    background-color: #79b0a1;
+.content-wrapper .divider{
+    height: 85%;
+    width: 2px;
+    background-color: white;
+    margin:0 30px;
+}
+
+/*.product-price-btn button:hover {*/
+/*    background-color: #79b0a1;*/
+/*}*/
+
+@media only screen and (max-width: 768px) {
+    .content-wrapper{
+        flex-direction: column;
+        overflow-y: auto;
+        height: 100%;
+    }
+    .content-wrapper .divider{
+        height: 2px;
+        width: 80%;
+    }
+
+    .content-wrapper .product-info{
+        width: 90%;
+        padding: 0;
+     }
+    .content-wrapper .divider,.img-gradient{
+        display: none;
+    }
+    .content-wrapper h1{
+        font-size: 20px !important;
+    }
+
+    .content-wrapper .product-price-btn button{
+        width: 100%;
+    }
+    .content-wrapper .product-text h1 {
+        margin: 15px 0 7px 0;
+    }
 }

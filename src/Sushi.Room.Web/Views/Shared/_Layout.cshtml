@@ -2,15 +2,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - Sushi.Room.Web</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/plugins/font-awesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/plugins/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css"/>
     @await RenderSectionAsync("Styles", false)
 </head>
 <body>
+<div class="bs-canvas-overlay bs-canvas-anim bg-dark position-fixed w-100 h-100"></div>
+<partial name="_BasketSidebarPartial"/>
+<div>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">
             <div class="container">
@@ -21,45 +24,118 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="">Privacy</a>
-                        </li>
+                        @* <li class="nav-item"> *@
+                        @*     <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a> *@
+                        @* </li> *@
+                        @* <li class="nav-item"> *@
+                        @*     <a class="nav-link text-light" asp-area="">Privacy</a> *@
+                        @* </li> *@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-shopping-cart"></i> <span class="basket-products-count">0</span> <i class="fa fa-caret-down"></i></a>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" type="button" data-toggle="canvas" data-target="#bs-canvas-right" aria-expanded="false" aria-controls="bs-canvas-right">
+                                <i class="fa fa-shopping-cart"></i> <span class="basket-products-count">0</span> <i class="fa fa-caret-down"></i>
+                            </a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            <nav aria-label="breadcrumb">
-              @await RenderSectionAsync("Breadcrambs", false)
-            </nav>
-            @RenderBody()
-        </main>
-    </div>
-
+</div>
+<div class="container">
+    <main role="main" class="pb-3">
+        <nav aria-label="breadcrumb">
+            @await RenderSectionAsync("Breadcrambs", false)
+        </nav>
+        @RenderBody()
+    </main>
+</div>
+<div>
     <footer class="border-top footer text-light">
         <div class="container">
             &copy; 2021 - Sushi.Room.Web
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/Basket.js" asp-append-version="true"></script>
-    <script >
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/plugins/bootstrap/js/bootstrap-input-spinner.js"></script>
+<script src="~/plugins/template7/template7.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/js/Basket.js" asp-append-version="true"></script>
+<script >
         $(function (){
-            Basket.getProductsUrl = '@Url.RouteUrl(RouteNames.WebProducts.ProductsByIds, new {culture = ViewContext.RouteData.Values["culture"]?.ToString() ?? Cultures.ka})'
+            Basket.getProductsUrl = '@Url.RouteUrl(RouteNames.WebProducts.ProductsByIds, new {culture = ViewContext.RouteData.Values["culture"]?.ToString() ?? Cultures.ka})';
+            BasketSidebar.clearBasketConfirmText = '@localizer["Clear_Basket_Confirm_Text"]';
         });
     </script>
-    @await RenderSectionAsync("Scripts", required: false)
+<script id="basket-sidebar-template" type="text/template7">
+    <div class="sidebar">
+        <div class="sidebar-content">
+            {{#each products}}
+            <div class="item">
+                <div class="item__content">
+                    <div class="item__info">
+                        <div class="item__info--img">
+                            {{#if hasDiscount}}
+                            <div class="badge">-{{discountPercent}} %</div>
+                            {{/if}}
+                            <img src="{{imageUrl}}" alt="Image"/>
+                        </div>
+                        <div class="item__info--desc">
+                            <div class="item__info--title">{{title}}</div>
+                            <div class="item__info--price">
+                                <div class="product-price">
+                                    {{#if hasDiscount}}
+                                    <span>{{discountedPrice}} ₾</span>
+                                    <small>{{price}} ₾</small>
+                                    {{else}}
+                                    <span>{{price}} ₾</span>
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item__count-manager">
+                        <div class="qty">
+                            <span class="minus bg-dark">-</span>
+                            <input type="number" class="count" name="qty" value="{{quantity}}">
+                            <span class="plus bg-dark">+</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="item__clear">
+                    <a class="remove-basket-item-btn" href="#" data-product-id="{{id}}">
+                        <span>@localizer["BasketSidebarPartial_Basket_Item_Delete_Text"]</span>
+                    </a>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        <div class="sidebar-summary">
+            <div class="summary-content">
+                <div class="summary-item">
+                    <div class="summary-item--title">სულ ჯამი:</div>
+                    <div class="summary-item--value">{{subTotalPrice}} ₾</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-item--title">დღგ (18%):</div>
+                    <div class="summary-item--value">{{commissionPrice}} ₾</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-item--title">სულ:</div>
+                    <div class="summary-item--value">{{totalPrice}} ₾</div>
+                </div>
+            </div>
+            <div>
+                <div class="clear-btn">
+                    <button id="clear-basket-btn" type="button">@localizer["BasketSidebarPartial_Clear_Cart_Text"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

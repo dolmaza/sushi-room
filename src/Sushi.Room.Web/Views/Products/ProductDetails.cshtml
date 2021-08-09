@@ -16,19 +16,41 @@
 
 
 
-<div class="wrapper">
+<div class="content-wrapper">
   <div class="product-img">
+    @if (Model.Product.HasDiscount)
+    {
+      <div class="badge">-@Model.Product.DiscountPercent %</div>
+    }
     <img src="@Model.Product.ImageUrl" height="420" width="327">
+    <div class="img-gradient"></div>
   </div>
+  <div class="divider"></div>
   <div class="product-info">
     <div class="product-text">
-      <h1>@Model.Product.Title</h1>
-      <h2>@Model.CategoryCaption</h2>
-      <p class="product-price"><span>78</span> $</p>
-      <p class="product-description">@Html.Raw(Model.Product.Description)</p>
+      <div>
+        <h1>@Model.Product.Title</h1>
+      </div>
+      <div>     
+        <h2>@Model.CategoryCaption</h2>
+      </div>
+      <div>
+        <p class="product-price">
+          @if (Model.Product.HasDiscount)
+          {
+              <span>@Model.Product.DiscountedPrice ₾</span>
+              <small>@Model.Product.Price ₾</small>
+          }
+          else
+          {
+              <span>@Model.Product.Price ₾</span>
+          }
+        </p>
+      </div>
+      <div class="product-description">@Html.Raw(Model.Product.Description)</div>
     </div>
     <div class="product-price-btn">
-      <button type="button">buy now</button>
+      <button type="button" class="add-product-in-basket-btn" data-product-id="@Model.Product.Id">@localizer["ProductDetails_Add-Cart-Text"]</button>
     </div>
   </div>
 </div> 

@@ -101,4 +101,7 @@
 	<data name="Product_Details_Breadcrambs_Home" xml:space="preserve">
 		<value>Home</value>
 	</data>
+	<data name="ProductDetails_Add-Cart-Text" xml:space="preserve">
+		<value>Add Cart</value>
+	</data>
 </root>

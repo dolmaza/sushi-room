@@ -17,15 +17,14 @@ namespace Sushi.Room.Infrastructure.Repositories
         {
             var query = (from product in Query()
                 join productCategory in Context.Set<ProductCategory>() on product.Id equals productCategory.ProductId
-                join category in Context.Set<Category>() on productCategory.CategoryId equals category.Id 
-                orderby product.DateOfCreate descending
+                join category in Context.Set<Category>() on productCategory.CategoryId equals category.Id
                 where string.IsNullOrEmpty(searchValue) || product.Title.Contains(searchValue)
                                                         || product.TitleEng.Contains(searchValue)
                                                         || product.Description.Contains(searchValue)
                                                         || product.DescriptionEng.Contains(searchValue)
                                                         || category.Caption.Contains(searchValue)
                                                         || category.CaptionEng.Contains(searchValue)
-                select product).Distinct();
+                select product).Distinct().OrderByDescending(ob => ob.DateOfCreate);
 
             var count = query.Count();
 
