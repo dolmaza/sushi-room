@@ -1,0 +1,41 @@
+@model HeaderComponentModel
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark box-shadow mb-3 fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="@Url.RouteUrl(RouteNames.WebCategories.Categories, new { culture = Model.Culture})"><img width="83" src="~/images/sushiroom_jpg-removebg-preview.png" alt=""></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    @* <li class="nav-item"> *@
+                    @*     <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a> *@
+                    @* </li> *@
+                    @* <li class="nav-item"> *@
+                    @*     <a class="nav-link text-light" asp-area="">Privacy</a> *@
+                    @* </li> *@
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img width="19" src="@Model.SelectedLanguagePickerDropDownItem.Icon" alt="Icon"> @Model.SelectedLanguagePickerDropDownItem.Name
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @foreach (var item in Model.LanguagePickerDropDownItems)
+                            {
+                                <a class="dropdown-item" href="@item.Url"><img width="19" src="@item.Icon" alt="Icon"> @item.Name</a>
+                            }
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" type="button" data-toggle="canvas" data-target="#bs-canvas-right" aria-expanded="false" aria-controls="bs-canvas-right">
+                            <i class="fa fa-shopping-cart"></i> <span class="basket-products-count">0</span> <i class="fa fa-caret-down"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+

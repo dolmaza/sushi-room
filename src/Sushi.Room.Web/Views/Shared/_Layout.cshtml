@@ -14,36 +14,9 @@
 <div class="bs-canvas-overlay bs-canvas-anim bg-dark position-fixed w-100 h-100"></div>
 <partial name="_BasketSidebarPartial"/>
 <div>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Sushi.Room.Web</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        @* <li class="nav-item"> *@
-                        @*     <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a> *@
-                        @* </li> *@
-                        @* <li class="nav-item"> *@
-                        @*     <a class="nav-link text-light" asp-area="">Privacy</a> *@
-                        @* </li> *@
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="nav-item">
-                            <a class="nav-link text-light" type="button" data-toggle="canvas" data-target="#bs-canvas-right" aria-expanded="false" aria-controls="bs-canvas-right">
-                                <i class="fa fa-shopping-cart"></i> <span class="basket-products-count">0</span> <i class="fa fa-caret-down"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+    @await Component.InvokeAsync("WebHeader")
 </div>
-<div class="container">
+<div class="container" style="margin-top: 75px">
     <main role="main" class="pb-3">
         <nav aria-label="breadcrumb">
             @await RenderSectionAsync("Breadcrambs", false)
@@ -52,9 +25,9 @@
     </main>
 </div>
 <div>
-    <footer class="border-top footer text-light">
+    <footer class="footer text-light">
         <div class="container">
-            &copy; 2021 - Sushi.Room.Web
+            &copy; 2021 - @localizer["Layout_Sushi_Room_Text"]
         </div>
     </footer>
 </div>
@@ -99,9 +72,9 @@
                     </div>
                     <div class="item__count-manager">
                         <div class="qty">
-                            <span class="minus bg-dark">-</span>
+                            <span class="minus bg-dark" data-product-id="{{id}}">-</span>
                             <input type="number" class="count" name="qty" value="{{quantity}}">
-                            <span class="plus bg-dark">+</span>
+                            <span class="plus bg-dark" data-product-id="{{id}}">+</span>
                         </div>
                     </div>
                 </div>

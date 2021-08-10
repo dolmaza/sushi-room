@@ -62,5 +62,11 @@ namespace Sushi.Room.Web.Resources.Views.Shared {
                 return ResourceManager.GetString("Clear_Basket_Confirm_Text", resourceCulture);
             }
         }
+        
+        internal static string Layout_Sushi_Room_Text {
+            get {
+                return ResourceManager.GetString("Layout_Sushi_Room_Text", resourceCulture);
+            }
+        }
     }
 }

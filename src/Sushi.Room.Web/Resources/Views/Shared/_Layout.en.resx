@@ -27,4 +27,7 @@
     <data name="Clear_Basket_Confirm_Text" xml:space="preserve">
         <value>Do you realy want to clear basket?</value>
     </data>
+    <data name="Layout_Sushi_Room_Text" xml:space="preserve">
+        <value>Sushi Room</value>
+    </data>
 </root>

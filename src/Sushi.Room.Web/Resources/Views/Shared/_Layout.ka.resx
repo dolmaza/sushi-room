@@ -27,4 +27,7 @@
     <data name="Clear_Basket_Confirm_Text" xml:space="preserve">
         <value>ნამდვილად გსურთ კალათის გასუფთავება?</value>
     </data>
+    <data name="Layout_Sushi_Room_Text" xml:space="preserve">
+        <value>სუში რუმი</value>
+    </data>
 </root>

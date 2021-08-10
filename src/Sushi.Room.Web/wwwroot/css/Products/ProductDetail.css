@@ -76,7 +76,7 @@
     color: white;
     padding-bottom: 10px;
     border-bottom: 1px solid white;
-    
+    text-transform: uppercase;
 }
 
 .content-wrapper .product-text h1,
