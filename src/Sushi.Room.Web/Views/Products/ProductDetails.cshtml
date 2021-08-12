@@ -1,5 +1,7 @@
 ﻿@model PublishedProductDetailViewModel
-
+@{
+  ViewData["Title"] = Model.Product.Title;
+}
 @section Styles
 {
   <link rel="stylesheet" href="~/css/Products/ProductDetail.css">

@@ -290,3 +290,8 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+
+.footer {
+  position: fixed !important;
+}
