@@ -46,11 +46,13 @@
         public struct WebCategories
         {
             public const string Categories = "WebCategoriesPage";
+            public const string CategoriesData = "WebCategoriesData";
         }
 
         public struct WebProducts
         {
             public const string Products = "WebProductsPage";
+            public const string ProductsData = "WebProductsData";
             public const string ProductDetails = "WebProductDetails";
             public const string ProductsByIds = "WebProductsByIds";
         }

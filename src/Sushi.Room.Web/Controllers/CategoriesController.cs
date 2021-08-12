@@ -23,12 +23,21 @@ namespace Sushi.Room.Web.Controllers
         [Route("{culture}/categories", Name = RouteNames.WebCategories.Categories)]
         public async Task<IActionResult> Categories(string culture = Cultures.ka)
         {
-            var categories = await _categoryService.GetPublishedCategoriesByCultureAsync(culture, 1, 10);
-
             return View(new PublishedCategoryViewModel
             {
                 Culture = culture,
-                Categories = categories
+            });
+        }
+        
+        [HttpGet]
+        [Route("{culture}/categories/data", Name = RouteNames.WebCategories.CategoriesData)]
+        public async Task<IActionResult> CategoriesData(string culture, int pageNumber)
+        {
+            var categories = await _categoryService.GetPublishedCategoriesByCultureAsync(culture, pageNumber, 20);
+
+            return Ok(new
+            {
+                categories = categories
             });
         }
     }

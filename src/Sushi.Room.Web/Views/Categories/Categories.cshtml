@@ -11,18 +11,32 @@
 }
 <div class="container">
     <div class="row">
-        @foreach (var category in Model.Categories)
-        {
-            <div class="col-md-6">
-                <div class="category-box">
-                    <a href="@Url.RouteUrl(RouteNames.WebProducts.Products, new {culture = Model.Culture, categoryId = category.Id})">
-                        <img class="category-image" src="@category.ImageUrl" alt="Image">
-                        <div class="content">
-                            <h5 class="category-title">@category.Caption</h5>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        }
-     </div>
+        
+    </div>
 </div>
+
+@section Scripts
+{
+    <script src="~/plugins/infinite-scroll/infinite-scroll.pkgd.min.js"></script>
+    <script src="~/js/Categories/CategoriesPage.js"></script>
+    <script>
+        $(function() {
+            CategoriesPage.categoriesDataLoadUrl = '@Url.RouteUrl(RouteNames.WebCategories.CategoriesData, new {culture = Model.Culture})';
+            CategoriesPage.init();
+        });
+    </script>
+    <script id="category-items-template" type="text/template7">
+        {{#each categories}}
+        <div class="col-md-6">
+            <div class="category-box">
+                <a href="/@Model.Culture/{{id}}/products">
+                    <img class="category-image" src="{{imageUrl}}" alt="Image">
+                    <div class="content">
+                        <h5 class="category-title">{{caption}}</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {{/each}}
+    </script>
+}

@@ -11,6 +11,8 @@ namespace Sushi.Room.Web.Controllers
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
 
+        private const int ProductItemsCountPerLoad = 24;
+
         public ProductsController(IProductService productService, ICategoryService categoryService)
         {
             _productService = productService;
@@ -28,14 +30,23 @@ namespace Sushi.Room.Web.Controllers
                 return NotFound();
             }
             
-            var products = await _productService.GetPublishedProductsByCategoryAsync(culture, categoryId, 1, 10);
-            
             return View(new PublishedProductViewModel
             {
                 Culture = culture,
                 CategoryId = categoryId,
                 CategoryCaption = category.Caption,
-                Products = products
+            });
+        }
+        
+        [HttpGet]
+        [Route("{culture}/{categoryId}/products/data", Name = RouteNames.WebProducts.ProductsData)]
+        public async Task<IActionResult> GetProductsData(string culture, int categoryId, int pageNumber)
+        {
+            var products = await _productService.GetPublishedProductsByCategoryAsync(culture, categoryId, pageNumber, ProductItemsCountPerLoad);
+            
+            return Ok(new
+            {
+                products = products
             });
         }
 

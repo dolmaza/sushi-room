@@ -1,12 +1,12 @@
-var ProductsPage = (function () {
+var CategoriesPage = (function () {
     function init() {
         initInfiniteScroll();
     }
-    
+
     function initInfiniteScroll() {
         let $container = $( '.row').infiniteScroll({
             path: function() {
-                return `${ProductsPage.productsDataLoadUrl}?pageNumber=${this.pageIndex}`;
+                return `${CategoriesPage.categoriesDataLoadUrl}?pageNumber=${this.pageIndex}`;
             },
             responseBody: 'json',
             status: '.scroll-status',
@@ -14,26 +14,26 @@ var ProductsPage = (function () {
         });
 
         $container.on( 'load.infiniteScroll', function( event, response ) {
-            if (response.products.length) {
-                var template = $('#product-items-template').html();
+            if (response.categories.length) {
+                var template = $('#category-items-template').html();
 
                 var compiledTemplate = Template7.compile(template);
 
                 var html = compiledTemplate(response);
-                let $items =  $(html);
+                let $items = $(html);
 
                 $container.infiniteScroll( 'appendItems', $items );
             } else {
                 $container.infiniteScroll('destroy');
             }
-            
+
         });
-        
+
         $container.infiniteScroll('loadNextPage');
     }
     
     return {
-        productsDataLoadUrl: null,
+        categoriesDataLoadUrl: null,
         init: init
-    };
+    }
 })();

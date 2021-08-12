@@ -14,48 +14,48 @@
 }
 <div class="container">
     <div class="row">
-        @foreach (var product in Model.Products)
-        {
-            <div class="col-lg-4 col-md-6">
-                <div class="product-card">
-                    @if (product.HasDiscount)
-                    {
-                        <div class="badge">-@product.DiscountPercent %</div>
-                    }
-                    <a class="product-navigation" href="@Url.RouteUrl(RouteNames.WebProducts.ProductDetails, new {culture = Model.Culture, categoryId = Model.CategoryId, productId = product.Id})">
-                        <div class="product-img">
-                            <img src="@product.ImageUrl" alt="Image">
-                        </div>
-                        <div class="product-details">
-                            <h6 class="product-title">@product.Title</h6>
-                            <div class="product-bottom-details">
-                                <div class="product-price">
-                                    @if (product.HasDiscount)
-                                    {
-                                        <span>@product.DiscountedPrice ₾</span>
-                                        <small>@product.Price ₾</small>
-                                    }
-                                    else
-                                    {
-                                        <span>@product.Price ₾</span>
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <button class="add-cart add-product-in-basket-btn" data-product-id="@product.Id">@localizer["Products_Add_Cart_Text"]</button>
-                </div>
-            </div>
-        }
+        
     </div>
 </div>
 
 @section Scripts
 {
+    <script src="~/plugins/infinite-scroll/infinite-scroll.pkgd.min.js"></script>
     <script src="~/js/Products/ProductsPage.js"></script>
     <script>
         $(function() {
+          ProductsPage.productsDataLoadUrl = '@Url.RouteUrl(RouteNames.WebProducts.ProductsData, new {culture = Model.Culture, categoryId = Model.CategoryId})';
           ProductsPage.init();
         });
+    </script>
+    <script id="product-items-template" type="text/template7">
+        {{#each products}}
+        <div class="col-lg-4 col-md-6">
+            <div class="product-card">
+                {{#if hasDiscount}}
+                    <div class="badge">-{{discountPercent}} %</div>
+                {{/if}}
+                <a class="product-navigation" href="/@Model.Culture/@Model.CategoryId/products/{{id}}/details">
+                    <div class="product-img">
+                        <img src="{{imageUrl}}" alt="Image">
+                    </div>
+                    <div class="product-details">
+                        <h6 class="product-title">{{title}}</h6>
+                        <div class="product-bottom-details">
+                            <div class="product-price">
+                                {{#if hasDiscount}}
+                                    <span>{{discountedPrice}} ₾</span>
+                                    <small>{{price}} ₾</small>
+                                {{else}}
+                                    <span>{{price}} ₾</span>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <button class="add-cart add-product-in-basket-btn" data-product-id="{{id}}">@localizer["Products_Add_Cart_Text"]</button>
+            </div>
+        </div>
+        {{/each}}
     </script>
 }

@@ -6,6 +6,5 @@ namespace Sushi.Room.Web.Models.Categories
     public class PublishedCategoryViewModel
     {
         public string Culture { get; set; }
-        public List<PublishedCategoryDto> Categories { get; set; }
     }
 }
