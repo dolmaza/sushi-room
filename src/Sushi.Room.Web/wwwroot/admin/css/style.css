@@ -12,10 +12,7 @@
 }
 
 
-.page-header
-.page-header-inner
-.page-logo
-.logo-default {
-    margin-top: 20px;
-    margin-left: 20px;
+.page-header .page-header-inner .page-logo .logo-default {
+    width: 137px;
+    margin-top: 2px;
 }

@@ -11,7 +11,7 @@ namespace Sushi.Room.Web.ViewComponents
         public IViewComponentResult Invoke()
         {
             var culture = ViewContext.RouteData.Values["culture"]?.ToString();
-            var url = @HttpContext.Request.Path.ToString();
+            var url = HttpContext.Request.Path.ToString();
             
             var kaDropDownItem = new LanguagePickerDropDownItemModel
             {
@@ -32,7 +32,7 @@ namespace Sushi.Room.Web.ViewComponents
             };
             return View(new HeaderComponentModel
             {
-                Culture = culture,
+                Culture = culture ?? Cultures.ka,
                 SelectedLanguagePickerDropDownItem = culture == Cultures.en ? enDropDownItem : kaDropDownItem,
                 LanguagePickerDropDownItems = new List<LanguagePickerDropDownItemModel>
                 {
