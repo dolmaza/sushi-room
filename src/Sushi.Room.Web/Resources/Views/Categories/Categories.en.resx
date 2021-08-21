@@ -120,4 +120,7 @@
   <data name="Categories_Breadcrambs_Home" xml:space="preserve">
     <value>Home</value>
   </data>
+  <data name="Products_No_Data_Text" xml:space="preserve">
+    <value>No Data</value>
+  </data>
 </root>

@@ -15,6 +15,7 @@ var CategoriesPage = (function () {
 
         $container.on( 'load.infiniteScroll', function( event, response ) {
             if (response.categories.length) {
+                $('.no-data-container').remove();
                 var template = $('#category-items-template').html();
 
                 var compiledTemplate = Template7.compile(template);

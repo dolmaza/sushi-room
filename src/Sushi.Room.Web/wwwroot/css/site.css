@@ -295,3 +295,13 @@ body {
 .footer {
   position: fixed !important;
 }
+
+.no-data-container i {
+  font-size: 8em;
+  color: #e9ecef;
+}
+
+.no-data-container p {
+  font-size: 36px;
+  color: #e9ecef;
+}

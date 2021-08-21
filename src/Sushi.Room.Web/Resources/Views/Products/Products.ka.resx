@@ -104,4 +104,7 @@
 	<data name="Products_Add_Cart_Text" xml:space="preserve">
 		<value>კალათაში დამატება</value>
 	</data>
+	<data name="Products_No_Data_Text" xml:space="preserve">
+		<value>არაა მონაცემები</value>
+	</data>
 </root>

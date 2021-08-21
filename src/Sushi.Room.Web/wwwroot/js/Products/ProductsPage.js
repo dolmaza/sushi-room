@@ -15,6 +15,7 @@ var ProductsPage = (function () {
 
         $container.on( 'load.infiniteScroll', function( event, response ) {
             if (response.products.length) {
+                $('.no-data-container').remove();
                 var template = $('#product-items-template').html();
 
                 var compiledTemplate = Template7.compile(template);
