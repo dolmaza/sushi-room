@@ -16,7 +16,7 @@
 <div>
     @await Component.InvokeAsync("WebHeader")
 </div>
-<div class="container" style="margin-top: 75px">
+<div class="container" style="margin-top: 89px">
     <main role="main" class="pb-3">
         <nav aria-label="breadcrumb">
             @await RenderSectionAsync("Breadcrambs", false)
@@ -27,7 +27,17 @@
 <div>
     <footer class="footer text-light">
         <div class="container">
-            &copy; @DateTime.Now.Year - @localizer["Layout_Sushi_Room_Text"]
+            <div class="row">
+                <div class="col-md-6">
+                    &copy; @DateTime.Now.Year - @localizer["Layout_Sushi_Room_Text"]
+                </div>
+                <div class="col-md-6 text-right">
+                    <a href="https://www.facebook.com/RealSushiTbilisi/" target="_blank" title="Facebook"><img src="~/images/f_logo_RGB-Blue_58.png" width="25" alt="Facebook"></a>
+                    <a href="https://www.google.com/search?q=sushiroom&client=safari&hl=en-ge&sxsrf=ALeKk02Kuf-xH1eK1lCYgVHeogHFNDJXkQ%3A1629792969358&ei=yaokYaeaFYG2kwXXopP4Cw&oq=sushiroom&gs_lcp=ChNtb2JpbGUtZ3dzLXdpei1zZXJwEAMyBAgjECcyBAgjECcyCwguEIAEEMcBEK8BMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCABDILCC4QgAQQxwEQrwE6BAgAEEc6BwgjEOoCECc6DQguEMcBEK8BEOoCECc6CwguEMcBEK8BEJECOggIABCABBCxAzoKCC4QxwEQ0QMQQzoNCC4QsQMQxwEQowIQQzoICC4QgAQQsQM6BwguELEDEEM6BAguEEM6BAgAEEM6BwgAEMkDEEM6BQguEIAEOgcIABCABBAKUOMKWIIuYIM2aAFwAXgCgAHNAogBlBWSAQgwLjEyLjIuMZgBAKABAbABD8gBCMABAQ&sclient=mobile-gws-wiz-serp&fbclid=IwAR1e-IYXKFAqvQ3Uyhgh0-DWALcj7NG_KyDdgQTi53iYlnY5FAvFSLNkyOM#wptab=s:H4sIAAAAAAAAAONgVuLVT9c3NEw2NTI2T0qveMRowS3w8sc9YSn9SWtOXmPU5OIKzsgvd80rySypFJLmYoOyBKX4uVB18uxi4vfJT07MCcjPDEoty0wtL17EKlVcWpyRqVCUn5-rUJKUmZNZDORAJAF9cQdXewAAAA" target="_blank" title="Google"><img src="~/images/google-logo.png" width="25" alt="Google"></a>
+                    <a href="https://www.tripadvisor.com/Restaurant_Review-g294195-d6779269-Reviews-Sushiroom-Tbilisi.html" target="_blank" title="Trip Advisor"><img src="~/images/tripadvisor-logo-6-1.png" width="25" alt="TripAdvisor"></a>
+                </div>
+            </div>
+            
         </div>
     </footer>
 </div>

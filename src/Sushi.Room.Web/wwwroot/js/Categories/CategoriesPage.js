@@ -4,7 +4,7 @@ var CategoriesPage = (function () {
     }
 
     function initInfiniteScroll() {
-        let $container = $( '.row').infiniteScroll({
+        let $container = $( '#categories-list-container').infiniteScroll({
             path: function() {
                 return `${CategoriesPage.categoriesDataLoadUrl}?pageNumber=${this.pageIndex}`;
             },
