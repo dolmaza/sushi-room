@@ -38,7 +38,10 @@ namespace Sushi.Room.Infrastructure.Repositories
             return await Query()
                 .Where(c => c.IsPublished)
                 .OrderBy(ob => ob.SortIndex)
-                .ThenBy(ob => ob.DateOfCreate).Skip((pageNumber - 1) * pageSize).ToListAsync();
+                .ThenBy(ob => ob.DateOfCreate)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
         }
     }
 }
