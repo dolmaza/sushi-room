@@ -304,3 +304,7 @@ body {
   font-size: 36px;
   color: #e9ecef;
 }
+
+.footer .social-icon-margin {
+  margin-right: 6px;
+}

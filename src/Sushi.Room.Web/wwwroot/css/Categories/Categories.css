@@ -16,6 +16,7 @@
 .category-box .category-image {
     width:100%;
     border-radius: 5px;
+    height: 525px;
 }
 
 .category-box .content {    
@@ -25,4 +26,28 @@
 
 .category-box .content .category-title {
     text-align:center;
+}
+
+@media only screen and (max-width: 1200px) {
+    .category-box .category-image {
+        height: 435px;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    .category-box .category-image {
+        height: 315px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .category-box .category-image {
+        height: 480px;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .category-box .category-image {
+        height: 496px;
+    }
 }
