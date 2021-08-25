@@ -4,7 +4,7 @@ var ProductsPage = (function () {
     }
     
     function initInfiniteScroll() {
-        let $container = $( '.row').infiniteScroll({
+        let $container = $( '#products-list-container').infiniteScroll({
             path: function() {
                 return `${ProductsPage.productsDataLoadUrl}?pageNumber=${this.pageIndex}`;
             },
