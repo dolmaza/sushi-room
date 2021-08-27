@@ -48,6 +48,6 @@
 
 @media only screen and (max-width: 576px) {
     .category-box .category-image {
-        height: 496px;
+        height: 300px;
     }
 }

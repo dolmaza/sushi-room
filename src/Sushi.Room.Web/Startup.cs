@@ -88,7 +88,7 @@ namespace Sushi.Room.Web
 
             app.UseRequestLocalization(options =>
             {
-                options.DefaultRequestCulture = new RequestCulture(Cultures.ka);
+                options.DefaultRequestCulture = new RequestCulture(Cultures.en);
                 options.SupportedCultures = cultures;
                 options.SupportedUICultures = cultures;
                 options.RequestCultureProviders.Insert(0, new RouteValueRequestCultureProvider() { Options = options });
