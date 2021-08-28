@@ -42,6 +42,8 @@ namespace Sushi.Room.Application.Services.DataModels
         public string ImageUrl { get; set; }
         public string ImageBase64 { get; set; }
 
+        public string CategoryCaptions { get; set; }
+
         public List<KeyValuePair<int, string>> Categories { get; set; }
 
         public ProductDto()

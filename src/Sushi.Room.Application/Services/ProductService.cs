@@ -211,6 +211,7 @@ namespace Sushi.Room.Application.Services
                 DiscountPercent = product.DiscountPercent,
                 DiscountedPrice = product.CalculateDiscountedPrice(),
                 IsPublished = product.IsPublished,
+                CategoryCaptions = string.Join(", ",  product.ProductCategories.Select(pc => pc.Category.Caption).ToList()),
                 ImageUrl = string.IsNullOrEmpty(product.ImageName)
                     ? default
                     : $"{_appSettings.WebsiteBaseUrl}{_appSettings.UploadFolderPath}{product.ImageName}"
