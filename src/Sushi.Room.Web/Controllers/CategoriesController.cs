@@ -19,9 +19,8 @@ namespace Sushi.Room.Web.Controllers
         }
 
         [HttpGet]
-        [Route("")]
         [Route("{culture}/categories", Name = RouteNames.WebCategories.Categories)]
-        public async Task<IActionResult> Categories(string culture = Cultures.ka)
+        public IActionResult Categories(string culture = Cultures.ka)
         {
             return View(new PublishedCategoryViewModel
             {

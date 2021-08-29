@@ -205,10 +205,11 @@ var BasketSidebar = (function () {
     }
     
     function initControls() {
+        var w = window.innerWidth;
         var bsDefaults = {
                 offset: false,
                 overlay: true,
-                width: '330px'
+                width: w < 576 ?'330px' : "420px"
             },
             bsMain = $('.bs-offset-main'),
             bsOverlay = $('.bs-canvas-overlay');

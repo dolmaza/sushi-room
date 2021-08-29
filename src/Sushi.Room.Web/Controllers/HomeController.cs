@@ -16,6 +16,7 @@ namespace Sushi.Room.Web.Controllers
             _logger = logger;
         }
 
+        [Route("")]
         public IActionResult Index()
         {
             return RedirectToRoute(RouteNames.WebCategories.Categories, new { culture = Cultures.ka });
