@@ -14,7 +14,7 @@ namespace Sushi.Room.Application.Services
         {
             _appSettings = appSettings.Value;
         }
-
+        
         public async Task SaveImageAsync(string imageBase64, string newImageFileName, string oldImageFileName = default)
         {
             DeleteImage(oldImageFileName);

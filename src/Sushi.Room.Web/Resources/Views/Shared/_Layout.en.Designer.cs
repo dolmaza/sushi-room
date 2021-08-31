@@ -68,5 +68,23 @@ namespace Sushi.Room.Web.Resources.Views.Shared {
                 return ResourceManager.GetString("Layout_Sushi_Room_Text", resourceCulture);
             }
         }
+        
+        internal static string BasketSidebarPartial_Basket_Summary_SubTotal_Text {
+            get {
+                return ResourceManager.GetString("BasketSidebarPartial_Basket_Summary_SubTotal_Text", resourceCulture);
+            }
+        }
+        
+        internal static string BasketSidebarPartial_Basket_Summary_Total_Text {
+            get {
+                return ResourceManager.GetString("BasketSidebarPartial_Basket_Summary_Total_Text", resourceCulture);
+            }
+        }
+        
+        internal static string BasketSidebarPartial_APT_Text {
+            get {
+                return ResourceManager.GetString("BasketSidebarPartial_APT_Text", resourceCulture);
+            }
+        }
     }
 }

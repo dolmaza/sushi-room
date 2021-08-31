@@ -30,4 +30,13 @@
     <data name="Layout_Sushi_Room_Text" xml:space="preserve">
         <value>Sushi Room</value>
     </data>
+    <data name="BasketSidebarPartial_Basket_Summary_SubTotal_Text" xml:space="preserve">
+        <value>Sub Total</value>
+    </data>
+    <data name="BasketSidebarPartial_Basket_Summary_Total_Text" xml:space="preserve">
+        <value>Total</value>
+    </data>
+    <data name="BasketSidebarPartial_APT_Text" xml:space="preserve">
+        <value>APT</value>
+    </data>
 </root>

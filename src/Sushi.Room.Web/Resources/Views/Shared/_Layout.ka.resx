@@ -30,4 +30,13 @@
     <data name="Layout_Sushi_Room_Text" xml:space="preserve">
         <value>სუში რუმი</value>
     </data>
+    <data name="BasketSidebarPartial_Basket_Summary_SubTotal_Text" xml:space="preserve">
+        <value>სულ ჯამი</value>
+    </data>
+    <data name="BasketSidebarPartial_Basket_Summary_Total_Text" xml:space="preserve">
+        <value>სულ</value>
+    </data>
+    <data name="BasketSidebarPartial_APT_Text" xml:space="preserve">
+        <value>დღგ</value>
+    </data>
 </root>

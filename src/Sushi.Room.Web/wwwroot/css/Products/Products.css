@@ -91,6 +91,12 @@ a {
     outline: 0 !important;
 }
 
+.product-card .add-cart:active {
+    background-color: #AB0300;
+    box-shadow: 0 1px #DF0400;
+    transform: translateY(2px);
+}
+
 @media only screen and (max-width: 1200px) {
     .product-card {
         width: 280px;
