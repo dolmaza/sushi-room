@@ -38,7 +38,6 @@
     height: auto;
     display: block;
     position: relative;
-    z-index: 1;
 }
 
 .content-wrapper .img-gradient{
@@ -181,6 +180,12 @@
 /*.product-price-btn button:hover {*/
 /*    background-color: #79b0a1;*/
 /*}*/
+
+@media only screen and (max-width: 992px) {
+    .content-wrapper h1{
+        font-size: 28px !important;
+    }
+}
 
 @media only screen and (max-width: 768px) {
     .content-wrapper{

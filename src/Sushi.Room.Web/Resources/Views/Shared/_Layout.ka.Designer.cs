@@ -81,9 +81,9 @@ namespace Sushi.Room.Web.Resources.Views.Shared {
             }
         }
         
-        internal static string BasketSidebarPartial_APT_Text {
+        internal static string BasketSidebarPartial_VAT_Text {
             get {
-                return ResourceManager.GetString("BasketSidebarPartial_APT_Text", resourceCulture);
+                return ResourceManager.GetString("BasketSidebarPartial_VAT_Text", resourceCulture);
             }
         }
     }

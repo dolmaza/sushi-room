@@ -36,7 +36,7 @@
     <data name="BasketSidebarPartial_Basket_Summary_Total_Text" xml:space="preserve">
         <value>სულ</value>
     </data>
-    <data name="BasketSidebarPartial_APT_Text" xml:space="preserve">
+    <data name="BasketSidebarPartial_VAT_Text" xml:space="preserve">
         <value>დღგ</value>
     </data>
 </root>
