@@ -16,7 +16,7 @@
 .category-box .category-image {
     width:100%;
     border-radius: 5px;
-    height: 580px;
+    height: 500px;
 }
 
 .category-box .content {    
@@ -40,11 +40,11 @@
     }
 }
 
-@media only screen and (max-width: 767px) {
+/*@media only screen and (max-width: 767px) {
     .category-box .category-image {
         height: 475px;
     }
-}
+}*/
 
 @media only screen and (max-width: 576px) {
     .category-box .category-image {
