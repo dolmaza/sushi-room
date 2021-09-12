@@ -5,6 +5,8 @@ a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
+    background-color: #c00;
+    padding: .5rem 1rem
 }
 
 /* Provide sufficient contrast against white background */
@@ -78,8 +80,9 @@ body {
 .navbar {
     /*background-color: #8CA1A1;*/
     /*background-color: #add600;*/
-    border-bottom: 2px solid #000000;
-    background-image: url('/images/header-sushi.png')
+    /*border-bottom: 2px solid #000000;*/
+    background-image: url('/images/header-sushi.png');
+    padding: 0 1rem;
 }
 
 .breadcrumb-item a {
